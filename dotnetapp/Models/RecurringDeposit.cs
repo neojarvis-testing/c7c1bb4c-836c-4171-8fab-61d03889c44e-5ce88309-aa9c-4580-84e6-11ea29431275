@@ -13,9 +13,8 @@ namespace dotnetapp.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RDId { get; set; }
 
-        [Required]
         [ForeignKey(nameof(User))]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         [Required]
         [ForeignKey(nameof(Account))]
@@ -35,7 +34,7 @@ namespace dotnetapp.Models
 
         public DateTime? DateClosed { get; set; }
 
-        public User User { get; set; }
+        public User? User { get; set; }
 
         public Account Account { get; set; }
 

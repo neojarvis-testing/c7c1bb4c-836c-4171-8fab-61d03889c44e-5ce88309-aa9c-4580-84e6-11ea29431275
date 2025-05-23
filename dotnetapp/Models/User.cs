@@ -14,15 +14,19 @@ namespace dotnetapp.Models
         public int UserId { get; set; }
 
         [Required]
+        [StringLength(400)]
         public string Email { get; set; }
 
         [Required]
+        [StringLength(500)]
         public string Password { get; set; }
 
         [Required]
+        [StringLength(200)]
         public string Username { get; set; }
 
         [Required]
+        [StringLength(30)]
         public string MobileNumber { get; set; }
 
         [Required]

@@ -26,6 +26,7 @@ namespace dotnetapp.Models
 
         public TransactionStatusEnum Status { get; set; }
 
+        [StringLength(4000)]
         public string Description { get; set; }
 
         public bool IsApprovedByTeller { get; set; }

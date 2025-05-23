@@ -18,6 +18,7 @@ namespace dotnetapp.Models
         public int UserId { get; set; }
 
         [Required]
+        [StringLength(500)]
         public string AccountHolderName { get; set; }
 
         [Required]
@@ -30,6 +31,7 @@ namespace dotnetapp.Models
         public AccountStatusEnum Status { get; set; }
 
         [Required]
+        [StringLength(100)]
         public string ProofOfIdentity { get; set; }
 
         [Required]
@@ -39,8 +41,10 @@ namespace dotnetapp.Models
 
         public User User { get; set; }
 
+        [InverseProperty("Account")]
         public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
+        [InverseProperty("ReceivedAccount")]
         public List<Transaction> ReceivedTransactions { get; set; } = new List<Transaction>();
 
         public List<FixedDeposit> FixedDeposits = new List<FixedDeposit>();
