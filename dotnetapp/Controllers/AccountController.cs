@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using dotnetapp.Services;
-using dotnetapp.Models;
+using CommonLibrary.Models;
 using dotnetapp.ViewModels;
 using dotnetapp.Exceptions;
 

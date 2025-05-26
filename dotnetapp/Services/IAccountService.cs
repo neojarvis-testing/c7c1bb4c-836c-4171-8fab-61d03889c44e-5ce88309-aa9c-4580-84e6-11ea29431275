@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using dotnetapp.Models;
+using CommonLibrary.Models;
 using dotnetapp.ViewModels;
 
 namespace dotnetapp.Services
