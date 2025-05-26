@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dotnetapp", "dotnetapp.csproj", "{A7127732-5F62-4A44-BBF9-D84D7C8E9B90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "..\TestProject\TestProject.csproj", "{9430730A-FDEC-44AD-B20A-BAF807F931FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ApiGatewayService", "..\ApiGatewayService\ApiGatewayService.csproj", "{9DBB9514-6845-438B-88BD-C50550A3C6A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A7127732-5F62-4A44-BBF9-D84D7C8E9B90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7127732-5F62-4A44-BBF9-D84D7C8E9B90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7127732-5F62-4A44-BBF9-D84D7C8E9B90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7127732-5F62-4A44-BBF9-D84D7C8E9B90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9430730A-FDEC-44AD-B20A-BAF807F931FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9430730A-FDEC-44AD-B20A-BAF807F931FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9430730A-FDEC-44AD-B20A-BAF807F931FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9430730A-FDEC-44AD-B20A-BAF807F931FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DBB9514-6845-438B-88BD-C50550A3C6A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DBB9514-6845-438B-88BD-C50550A3C6A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DBB9514-6845-438B-88BD-C50550A3C6A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DBB9514-6845-438B-88BD-C50550A3C6A4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
