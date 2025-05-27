@@ -37,7 +37,7 @@ namespace CommonLibrary.Lib
         private static readonly string _issuer = "http://localhost:8079";
         private static readonly string _audience = "http://localhost:8080";
 
-        public static void ConfigreJWTServices(IServiceCollection services)
+        public static void ConfigureJWTServices(IServiceCollection services)
         {
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

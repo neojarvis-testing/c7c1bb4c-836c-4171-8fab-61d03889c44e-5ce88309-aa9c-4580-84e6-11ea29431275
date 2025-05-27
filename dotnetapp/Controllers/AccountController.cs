@@ -7,6 +7,7 @@ using dotnetapp.Services;
 using CommonLibrary.Models;
 using dotnetapp.ViewModels;
 using dotnetapp.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotnetapp.Controllers
 {
@@ -22,16 +23,17 @@ namespace dotnetapp.Controllers
         }
 
         [HttpGet]
-        // Manger, Teller
+        [Authorize(Roles = "Teller,Manager")]
         public async Task<IActionResult> GetAll()
         {
             try
             {
                 var accounts = await _accountService.GetAllAsync();
-                if (accounts.Count == 0) {
-                    return NotFound("No Accounts");
-                }
                 return Ok(accounts);
+            }
+            catch (AccountNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -41,16 +43,17 @@ namespace dotnetapp.Controllers
 
         [HttpGet]
         [Route("user/{userId}")]
-        // Customer, Manager
+        [Authorize(Roles = "Customer,Manager")]
         public async Task<IActionResult> GetAccountsByUserId(int userId)
         {
             try
             {
                 var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
-                if (accounts.Count == 0) {
-                    return NotFound("No Accounts");
-                }
                 return Ok(accounts);
+            }
+            catch (AccountNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -59,24 +62,13 @@ namespace dotnetapp.Controllers
         }
 
         [HttpPost]
-        // Customer
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CreateAccount([FromBody] AccountCreateVM account)
         {
             try
             {
-                if (account.AccountType == AccountTypeEnum.Savings ||
-                    account.AccountType == AccountTypeEnum.Current)
-                {
-                    var createdAccount = await _accountService.CreateAccountAsync(account);
-                    if (createdAccount != null) {
-                        return StatusCode(201, createdAccount);
-                    }
-                    throw AccountAlreadyExistException.WithUserId(account.UserId);
-                } 
-                else 
-                {
-                    throw AccountInvalidTypeException.WithType(account.AccountType.ToString());
-                }
+                var createdAccount = await _accountService.CreateAccountAsync(account);
+                return StatusCode(201, createdAccount);
             }
             catch (AccountInvalidTypeException ex)
             {
@@ -94,16 +86,13 @@ namespace dotnetapp.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        // Customer, Manager
+        [Authorize(Roles = "Customer,Manager")]
         public async Task<IActionResult> GetAccountById(int id)
         {
             try
             {
                 var account = await _accountService.GetAccountByIdAsync(id);
-                if (account != null) {
-                    return Ok(account);
-                }
-                throw AccountNotFoundException.WithId(id);
+                return Ok(account);
             }
             catch (AccountNotFoundException ex)
             {
@@ -116,30 +105,31 @@ namespace dotnetapp.Controllers
         }
 
         [HttpPut]
-        // Manager
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> UpdateAccount([FromBody] Account account)
         {
             try
             {
                 var updatedAccount = await _accountService.UpdateAccountAsync(account);
-                if (updatedAccount != null) {
-                    return StatusCode(200, updatedAccount);
-                }
-                throw AccountNotFoundException.WithId(account.AccountId);
+                return StatusCode(200, updatedAccount);
             }
             catch (AccountNotFoundException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(ex.Message+ ex.StackTrace);
+            }
+            catch (AccountInvalidTypeException ex)
+            {
+                return BadRequest(ex.Message+ ex.StackTrace);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message+ ex.StackTrace);
             }
         }
 
         [HttpPatch]
         [Route("{id}")]
-        // Manager
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> UpdateAccountStatus(int id, [FromBody] AccountStatusUpdateVM status)
         {
             try
@@ -151,6 +141,10 @@ namespace dotnetapp.Controllers
             {
                 return NotFound(ex.Message);
             }
+            catch (AccountInvalidTypeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
@@ -159,7 +153,7 @@ namespace dotnetapp.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        // Manager
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteAccount(int id)
         {
             try

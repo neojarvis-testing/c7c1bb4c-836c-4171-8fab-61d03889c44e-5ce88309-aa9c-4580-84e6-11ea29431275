@@ -5,6 +5,23 @@ using System.Threading.Tasks;
 
 namespace CommonLibrary.Models
 {
+    public static class Enums
+    {
+        public static bool IsValidEnumValue<T>(this string text) where T : struct
+        {
+            if(!string.IsNullOrEmpty(text))
+            {
+                T tempValue;
+                if(Enum.TryParse(text, out tempValue))
+                {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+    }
+    
     public enum UserRoleEnum
     {
         Customer,

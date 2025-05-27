@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CommonLibrary.Lib;
+using CommonLibrary.Models;
 using dotnetapp.ViewModels;
 using dotnetapp.Services;
+using dotnetapp.Exceptions;
 
 namespace dotnetapp.Controllers
 {
@@ -46,8 +48,8 @@ namespace dotnetapp.Controllers
 
                 var token = TokenLib.Newtoken(user.Username, 
                     user.Email, 
-                    new string[] { user.UserRole.ToString() }, 
-                    new string[] { user.UserRole.ToString() }, 
+                    new string[] { user.UserRole }, 
+                    new string[] { user.UserRole }, 
                     120);
 
                 return Ok(new {
@@ -60,6 +62,33 @@ namespace dotnetapp.Controllers
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        [Route("api/register")]
+        public async Task<IActionResult> RegisterUser([FromBody] User user)
+        {
+            try
+            {
+                var registeredUser = await _authService.RegisterUser(user);
+                return Ok(new {
+                    Status = "Success",
+                    Message = "User has been created successfully",
+                    UserId = registeredUser.UserId
+                });
+            }
+            catch (UserPayloadInvalidException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (UserAlreadyExistsException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
             }
         }
     }
