@@ -40,7 +40,7 @@ namespace dotnetapp.Repository
                 AccountHolderName = account.AccountHolderName,
                 AccountType = account.AccountType,
                 Balance = account.Balance,
-                Status = AccountStatusEnum.Pending,
+                Status = AccountStatusEnum.Pending.ToString(),
                 ProofOfIdentity = account.ProofOfIdentity,
                 DateCreated = DateTime.Now,
                 LastUpdated = DateTime.Now

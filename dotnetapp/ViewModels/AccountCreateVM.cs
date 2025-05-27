@@ -10,7 +10,7 @@ namespace dotnetapp.ViewModels
     {
         public int UserId { get; set; }
         public string AccountHolderName { get; set; }
-        public AccountTypeEnum AccountType { get; set; }
+        public string AccountType { get; set; }
         public decimal Balance { get; set; }
         public string ProofOfIdentity { get; set; }
     }

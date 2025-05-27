@@ -38,8 +38,7 @@ namespace dotnetapp.Services
 
         public async Task<Account> CreateAccountAsync(AccountCreateVM account)
         {
-            if (account.AccountType != AccountTypeEnum.Savings &&
-                account.AccountType != AccountTypeEnum.Current)
+            if (!account.AccountType.IsValidEnumValue<AccountTypeEnum>())
             {
                 throw AccountInvalidTypeException.WithType(account.AccountType.ToString());
             }
@@ -67,6 +66,11 @@ namespace dotnetapp.Services
 
         public async Task<Account> UpdateAccountAsync(Account account)
         {
+            if (!account.AccountType.IsValidEnumValue<AccountTypeEnum>())
+            {
+                throw AccountInvalidTypeException.WithType(account.AccountType.ToString());
+            }
+
             var existingAccount = await GetAccountByIdAsync(account.AccountId);
             var updatedAccount = await _accountRepository.UpdateAccountAsync(account);
             return updatedAccount;
@@ -74,6 +78,11 @@ namespace dotnetapp.Services
 
         public async Task UpdateAccountStatusAsync(int accountId, AccountStatusUpdateVM status)
         {
+            if (!status.Status.IsValidEnumValue<AccountStatusEnum>())
+            {
+                throw AccountInvalidTypeException.WithType(status.Status.ToString());
+            }
+
             var existingAccount = await GetAccountByIdAsync(accountId);
             await _accountRepository.UpdateAccountStatusAsync(accountId, status);
         }

@@ -9,5 +9,7 @@ namespace dotnetapp.Services
     public interface IAuthService
     {
         Task<User> GetUserByUsernameAsync(string username);
+
+        Task<User> RegisterUser(User user);
     }
 }

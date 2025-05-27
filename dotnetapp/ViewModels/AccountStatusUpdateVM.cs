@@ -8,6 +8,6 @@ namespace dotnetapp.ViewModels
 {
     public class AccountStatusUpdateVM
     {
-        public AccountStatusEnum Status { get; set; }
+        public string Status { get; set; }
     }
 }

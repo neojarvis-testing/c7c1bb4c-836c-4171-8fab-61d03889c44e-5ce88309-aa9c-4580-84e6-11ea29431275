@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CommonLibrary.Models
 {
@@ -34,14 +35,19 @@ namespace CommonLibrary.Models
 
         public DateTime CreatedAt { get; set; }
 
+        [JsonIgnore]
         public Account? Account { get; set; }
 
+        [JsonIgnore]
         public FixedDeposit? FixedDeposit { get; set; }
 
+        [JsonIgnore]
         public RecurringDeposit? RecurringDeposit { get; set; }
 
+        [JsonIgnore]
         public Transaction? Transaction { get; set; }
 
+        [JsonIgnore]
         public User? User { get; set; }
     }
 }

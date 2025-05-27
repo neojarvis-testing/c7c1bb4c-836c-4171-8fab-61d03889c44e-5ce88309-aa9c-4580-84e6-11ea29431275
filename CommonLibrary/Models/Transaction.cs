@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CommonLibrary.Models
 {
@@ -20,11 +21,17 @@ namespace CommonLibrary.Models
         [ForeignKey(nameof(ReceivedAccount))]
         public int? ReceivedAccountId { get; set; }
 
-        public TransactionTypeEnum TransactionTypeEnum { get; set; }
+        // TransactionTypeEnum
+        [StringLength(30)]
+        [RegularExpression("Deposit|Withdrawal|Transfer", ErrorMessage="Invalid Transaction Type")] 
+        public string TransactionType { get; set; }
 
         public Decimal Amount { get; set; }
 
-        public TransactionStatusEnum Status { get; set; }
+        // TransactionStatusEnum
+        [StringLength(30)]
+        [RegularExpression("Pending|Completed|Failed", ErrorMessage="Invalid Transaction Status")] 
+        public string Status { get; set; }
 
         [StringLength(4000)]
         public string Description { get; set; }
@@ -33,10 +40,13 @@ namespace CommonLibrary.Models
 
         public bool IsApprovedByManager{ get; set; }
 
-        public Account Account { get; set; }
+        [JsonIgnore]
+        public Account? Account { get; set; }
 
+        [JsonIgnore]
         public Account? ReceivedAccount { get; set; }
 
+        [JsonIgnore]
         public List<Notification> Notifications = new List<Notification>();
     }
 }

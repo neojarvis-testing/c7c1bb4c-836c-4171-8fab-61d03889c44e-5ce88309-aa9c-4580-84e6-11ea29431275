@@ -12,8 +12,8 @@ using dotnetapp.Data;
 namespace dotnetapp.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250523204320_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250527065442_initial_create")]
+    partial class initial_create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace dotnetapp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("dotnetapp.Models.Account", b =>
+            modelBuilder.Entity("CommonLibrary.Models.Account", b =>
                 {
                     b.Property<int>("AccountId")
                         .ValueGeneratedOnAdd()
@@ -37,8 +37,10 @@ namespace dotnetapp.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("AccountType")
-                        .HasColumnType("int");
+                    b.Property<string>("AccountType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<decimal>("Balance")
                         .HasColumnType("decimal(18,2)");
@@ -54,8 +56,10 @@ namespace dotnetapp.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -67,7 +71,7 @@ namespace dotnetapp.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.FixedDeposit", b =>
+            modelBuilder.Entity("CommonLibrary.Models.FixedDeposit", b =>
                 {
                     b.Property<int>("FDId")
                         .ValueGeneratedOnAdd()
@@ -93,8 +97,10 @@ namespace dotnetapp.Migrations
                     b.Property<decimal>("PrincipalAmount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("TentureMonths")
                         .HasColumnType("int");
@@ -111,7 +117,7 @@ namespace dotnetapp.Migrations
                     b.ToTable("FixedDeposits");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.Notification", b =>
+            modelBuilder.Entity("CommonLibrary.Models.Notification", b =>
                 {
                     b.Property<int>("NotificationId")
                         .ValueGeneratedOnAdd()
@@ -159,7 +165,7 @@ namespace dotnetapp.Migrations
                     b.ToTable("Notifications");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.RecurringDeposit", b =>
+            modelBuilder.Entity("CommonLibrary.Models.RecurringDeposit", b =>
                 {
                     b.Property<int>("RDId")
                         .ValueGeneratedOnAdd()
@@ -185,8 +191,10 @@ namespace dotnetapp.Migrations
                     b.Property<decimal>("MonthlyDeposit")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<int>("TentureMonths")
                         .HasColumnType("int");
@@ -203,7 +211,7 @@ namespace dotnetapp.Migrations
                     b.ToTable("RecurringDeposits");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.Transaction", b =>
+            modelBuilder.Entity("CommonLibrary.Models.Transaction", b =>
                 {
                     b.Property<int>("TransactionId")
                         .ValueGeneratedOnAdd()
@@ -231,11 +239,15 @@ namespace dotnetapp.Migrations
                     b.Property<int?>("ReceivedAccountId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
-                    b.Property<int>("TransactionTypeEnum")
-                        .HasColumnType("int");
+                    b.Property<string>("TransactionType")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("TransactionId");
 
@@ -246,7 +258,7 @@ namespace dotnetapp.Migrations
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.User", b =>
+            modelBuilder.Entity("CommonLibrary.Models.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -269,8 +281,10 @@ namespace dotnetapp.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<int>("UserRole")
-                        .HasColumnType("int");
+                    b.Property<string>("UserRole")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Username")
                         .IsRequired()
@@ -282,9 +296,9 @@ namespace dotnetapp.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.Account", b =>
+            modelBuilder.Entity("CommonLibrary.Models.Account", b =>
                 {
-                    b.HasOne("dotnetapp.Models.User", "User")
+                    b.HasOne("CommonLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -293,15 +307,15 @@ namespace dotnetapp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.FixedDeposit", b =>
+            modelBuilder.Entity("CommonLibrary.Models.FixedDeposit", b =>
                 {
-                    b.HasOne("dotnetapp.Models.Account", "Account")
+                    b.HasOne("CommonLibrary.Models.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("dotnetapp.Models.User", "User")
+                    b.HasOne("CommonLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -310,25 +324,25 @@ namespace dotnetapp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.Notification", b =>
+            modelBuilder.Entity("CommonLibrary.Models.Notification", b =>
                 {
-                    b.HasOne("dotnetapp.Models.Account", "Account")
+                    b.HasOne("CommonLibrary.Models.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId");
 
-                    b.HasOne("dotnetapp.Models.FixedDeposit", "FixedDeposit")
+                    b.HasOne("CommonLibrary.Models.FixedDeposit", "FixedDeposit")
                         .WithMany()
                         .HasForeignKey("FDId");
 
-                    b.HasOne("dotnetapp.Models.RecurringDeposit", "RecurringDeposit")
+                    b.HasOne("CommonLibrary.Models.RecurringDeposit", "RecurringDeposit")
                         .WithMany()
                         .HasForeignKey("RDId");
 
-                    b.HasOne("dotnetapp.Models.Transaction", "Transaction")
+                    b.HasOne("CommonLibrary.Models.Transaction", "Transaction")
                         .WithMany()
                         .HasForeignKey("TransactionId");
 
-                    b.HasOne("dotnetapp.Models.User", "User")
+                    b.HasOne("CommonLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -343,15 +357,15 @@ namespace dotnetapp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.RecurringDeposit", b =>
+            modelBuilder.Entity("CommonLibrary.Models.RecurringDeposit", b =>
                 {
-                    b.HasOne("dotnetapp.Models.Account", "Account")
+                    b.HasOne("CommonLibrary.Models.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("dotnetapp.Models.User", "User")
+                    b.HasOne("CommonLibrary.Models.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
 
@@ -360,15 +374,15 @@ namespace dotnetapp.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.Transaction", b =>
+            modelBuilder.Entity("CommonLibrary.Models.Transaction", b =>
                 {
-                    b.HasOne("dotnetapp.Models.Account", "Account")
+                    b.HasOne("CommonLibrary.Models.Account", "Account")
                         .WithMany("Transactions")
                         .HasForeignKey("AccountId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("dotnetapp.Models.Account", "ReceivedAccount")
+                    b.HasOne("CommonLibrary.Models.Account", "ReceivedAccount")
                         .WithMany("ReceivedTransactions")
                         .HasForeignKey("ReceivedAccountId");
 
@@ -377,7 +391,7 @@ namespace dotnetapp.Migrations
                     b.Navigation("ReceivedAccount");
                 });
 
-            modelBuilder.Entity("dotnetapp.Models.Account", b =>
+            modelBuilder.Entity("CommonLibrary.Models.Account", b =>
                 {
                     b.Navigation("ReceivedTransactions");
 

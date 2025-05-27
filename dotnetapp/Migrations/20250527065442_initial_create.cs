@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dotnetapp.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initial_create : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -19,7 +19,7 @@ namespace dotnetapp.Migrations
                     Password = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     Username = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     MobileNumber = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
-                    UserRole = table.Column<int>(type: "int", nullable: false)
+                    UserRole = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -34,9 +34,9 @@ namespace dotnetapp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     AccountHolderName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    AccountType = table.Column<int>(type: "int", nullable: false),
+                    AccountType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Balance = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     ProofOfIdentity = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     LastUpdated = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -64,7 +64,7 @@ namespace dotnetapp.Migrations
                     InterestRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TentureMonths = table.Column<int>(type: "int", nullable: false),
                     MatuarityAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateClosed = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -96,7 +96,7 @@ namespace dotnetapp.Migrations
                     InterestRate = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TentureMonths = table.Column<int>(type: "int", nullable: false),
                     MatuarityAmount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateClosed = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -124,9 +124,9 @@ namespace dotnetapp.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AccountId = table.Column<int>(type: "int", nullable: false),
                     ReceivedAccountId = table.Column<int>(type: "int", nullable: true),
-                    TransactionTypeEnum = table.Column<int>(type: "int", nullable: false),
+                    TransactionType = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Amount = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(4000)", maxLength: 4000, nullable: false),
                     IsApprovedByTeller = table.Column<bool>(type: "bit", nullable: false),
                     IsApprovedByManager = table.Column<bool>(type: "bit", nullable: false)

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CommonLibrary.Models
 {
@@ -28,16 +29,22 @@ namespace CommonLibrary.Models
 
         public Decimal MatuarityAmount { get; set; }
 
-        public DepositStatusEnum Status { get; set; }
+        //DepositStatusEnum
+        [StringLength(30)]
+        [RegularExpression("Active|Closed|ClosedPrematuarely", ErrorMessage="Invalid Status")] 
+        public string Status { get; set; }
 
         public DateTime DateCreated { get; set; }
 
         public DateTime? DateClosed { get; set; }
 
+        [JsonIgnore]
         public User? User { get; set; }
 
-        public Account Account { get; set; }
+        [JsonIgnore]
+        public Account? Account { get; set; }
 
+        [JsonIgnore]
         public List<Notification> Notifications = new List<Notification>();
     }
 }

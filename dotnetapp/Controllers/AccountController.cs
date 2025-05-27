@@ -114,11 +114,15 @@ namespace dotnetapp.Controllers
             }
             catch (AccountNotFoundException ex)
             {
-                return NotFound(ex.Message);
+                return NotFound(ex.Message+ ex.StackTrace);
+            }
+            catch (AccountInvalidTypeException ex)
+            {
+                return BadRequest(ex.Message+ ex.StackTrace);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ex.Message+ ex.StackTrace);
             }
         }
 
@@ -135,6 +139,10 @@ namespace dotnetapp.Controllers
             catch (AccountNotFoundException ex)
             {
                 return NotFound(ex.Message);
+            }
+            catch (AccountInvalidTypeException ex)
+            {
+                return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {

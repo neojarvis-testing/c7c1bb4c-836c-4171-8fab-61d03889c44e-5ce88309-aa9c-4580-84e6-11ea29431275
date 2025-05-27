@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace CommonLibrary.Models
 {
@@ -22,13 +23,19 @@ namespace CommonLibrary.Models
         public string AccountHolderName { get; set; }
 
         [Required]
-        public AccountTypeEnum AccountType { get; set; }
+        [StringLength(30)]
+        [RegularExpression("Savings|Current", ErrorMessage="Invalid Account Type")]  
+        // AccountTypeEnum
+        public string AccountType { get; set; }
 
         [Required]
         public Decimal Balance { get; set; }
 
         [Required]
-        public AccountStatusEnum Status { get; set; }
+        [StringLength(30)]
+        [RegularExpression("Pending|Active|Deactivated", ErrorMessage="Invalid Account Status")] 
+        // AccountStatusEnum
+        public string Status { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -39,18 +46,24 @@ namespace CommonLibrary.Models
 
         public DateTime LastUpdated { get; set; }
 
-        public User User { get; set; }
+        [JsonIgnore]
+        public User? User { get; set; }
 
+        [JsonIgnore]
         [InverseProperty("Account")]
         public List<Transaction> Transactions { get; set; } = new List<Transaction>();
 
+        [JsonIgnore]
         [InverseProperty("ReceivedAccount")]
         public List<Transaction> ReceivedTransactions { get; set; } = new List<Transaction>();
 
+        [JsonIgnore]
         public List<FixedDeposit> FixedDeposits = new List<FixedDeposit>();
 
+        [JsonIgnore]
         public List<RecurringDeposit> RecurringDeposits = new List<RecurringDeposit>();
 
+        [JsonIgnore]
         public List<Notification> Notifications = new List<Notification>();
     }
 }
