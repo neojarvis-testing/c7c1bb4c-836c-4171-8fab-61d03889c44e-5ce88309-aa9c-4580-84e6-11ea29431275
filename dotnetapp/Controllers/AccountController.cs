@@ -7,6 +7,7 @@ using dotnetapp.Services;
 using CommonLibrary.Models;
 using dotnetapp.ViewModels;
 using dotnetapp.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotnetapp.Controllers
 {
@@ -22,7 +23,7 @@ namespace dotnetapp.Controllers
         }
 
         [HttpGet]
-        // Manger, Teller
+        [Authorize(Roles = "Teller,Manager")]
         public async Task<IActionResult> GetAll()
         {
             try
@@ -42,7 +43,7 @@ namespace dotnetapp.Controllers
 
         [HttpGet]
         [Route("user/{userId}")]
-        // Customer, Manager
+        [Authorize(Roles = "Customer,Manager")]
         public async Task<IActionResult> GetAccountsByUserId(int userId)
         {
             try
@@ -61,7 +62,7 @@ namespace dotnetapp.Controllers
         }
 
         [HttpPost]
-        // Customer
+        [Authorize(Roles = "Customer")]
         public async Task<IActionResult> CreateAccount([FromBody] AccountCreateVM account)
         {
             try
@@ -85,7 +86,7 @@ namespace dotnetapp.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        // Customer, Manager
+        [Authorize(Roles = "Customer,Manager")]
         public async Task<IActionResult> GetAccountById(int id)
         {
             try
@@ -104,7 +105,7 @@ namespace dotnetapp.Controllers
         }
 
         [HttpPut]
-        // Manager
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> UpdateAccount([FromBody] Account account)
         {
             try
@@ -128,7 +129,7 @@ namespace dotnetapp.Controllers
 
         [HttpPatch]
         [Route("{id}")]
-        // Manager
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> UpdateAccountStatus(int id, [FromBody] AccountStatusUpdateVM status)
         {
             try
@@ -152,7 +153,7 @@ namespace dotnetapp.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        // Manager
+        [Authorize(Roles = "Manager")]
         public async Task<IActionResult> DeleteAccount(int id)
         {
             try
