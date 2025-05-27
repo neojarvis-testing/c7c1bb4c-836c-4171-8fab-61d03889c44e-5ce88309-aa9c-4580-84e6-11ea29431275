@@ -28,10 +28,11 @@ namespace dotnetapp.Controllers
             try
             {
                 var accounts = await _accountService.GetAllAsync();
-                if (accounts.Count == 0) {
-                    return NotFound("No Accounts");
-                }
                 return Ok(accounts);
+            }
+            catch (AccountNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -47,10 +48,11 @@ namespace dotnetapp.Controllers
             try
             {
                 var accounts = await _accountService.GetAccountsByUserIdAsync(userId);
-                if (accounts.Count == 0) {
-                    return NotFound("No Accounts");
-                }
                 return Ok(accounts);
+            }
+            catch (AccountNotFoundException ex)
+            {
+                return NotFound(ex.Message);
             }
             catch (Exception ex)
             {
@@ -64,19 +66,8 @@ namespace dotnetapp.Controllers
         {
             try
             {
-                if (account.AccountType == AccountTypeEnum.Savings ||
-                    account.AccountType == AccountTypeEnum.Current)
-                {
-                    var createdAccount = await _accountService.CreateAccountAsync(account);
-                    if (createdAccount != null) {
-                        return StatusCode(201, createdAccount);
-                    }
-                    throw AccountAlreadyExistException.WithUserId(account.UserId);
-                } 
-                else 
-                {
-                    throw AccountInvalidTypeException.WithType(account.AccountType.ToString());
-                }
+                var createdAccount = await _accountService.CreateAccountAsync(account);
+                return StatusCode(201, createdAccount);
             }
             catch (AccountInvalidTypeException ex)
             {
@@ -100,10 +91,7 @@ namespace dotnetapp.Controllers
             try
             {
                 var account = await _accountService.GetAccountByIdAsync(id);
-                if (account != null) {
-                    return Ok(account);
-                }
-                throw AccountNotFoundException.WithId(id);
+                return Ok(account);
             }
             catch (AccountNotFoundException ex)
             {
@@ -122,10 +110,7 @@ namespace dotnetapp.Controllers
             try
             {
                 var updatedAccount = await _accountService.UpdateAccountAsync(account);
-                if (updatedAccount != null) {
-                    return StatusCode(200, updatedAccount);
-                }
-                throw AccountNotFoundException.WithId(account.AccountId);
+                return StatusCode(200, updatedAccount);
             }
             catch (AccountNotFoundException ex)
             {

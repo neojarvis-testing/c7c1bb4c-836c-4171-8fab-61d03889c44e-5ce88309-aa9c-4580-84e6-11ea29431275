@@ -15,5 +15,10 @@ namespace dotnetapp.Exceptions
         {
             return new AccountNotFoundException($"Account with Id: {id} not found");
         }
+
+        public static AccountNotFoundException WithUserId(int userId)
+        {
+            return new AccountNotFoundException($"Accounts with User Id: {userId} not found");
+        }
     }
 }
