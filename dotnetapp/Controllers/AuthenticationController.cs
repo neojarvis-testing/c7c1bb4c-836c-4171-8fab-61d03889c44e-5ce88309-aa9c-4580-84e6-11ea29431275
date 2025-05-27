@@ -8,6 +8,7 @@ using CommonLibrary.Models;
 using dotnetapp.ViewModels;
 using dotnetapp.Services;
 using dotnetapp.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotnetapp.Controllers
 {
@@ -24,6 +25,7 @@ namespace dotnetapp.Controllers
 
         [HttpPost]
         [Route("api/login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginVM login)
         {
             try
@@ -67,6 +69,7 @@ namespace dotnetapp.Controllers
 
         [HttpPost]
         [Route("api/register")]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterUser([FromBody] User user)
         {
             try
