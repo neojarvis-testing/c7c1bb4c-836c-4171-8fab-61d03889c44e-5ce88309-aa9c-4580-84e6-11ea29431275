@@ -1,0 +1,40 @@
+{
+    "Routes":[
+        {
+            "DownstreamPathTemplate": "/api/register",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8079
+                }
+            ],
+            "UpstreamPathtemplate": "/api/register",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/login",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8079
+                }
+            ],
+            "UpstreamPathtemplate": "/api/login",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/account/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8079
+                }
+            ],
+            "UpstreamPathtemplate": "/api/account/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch"]
+        }
+    ]
+}
