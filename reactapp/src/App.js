@@ -25,7 +25,7 @@ function App() {
                             }
                         >
                             <Route index element={<HomePage />} />
-                            <Route path="/accounts" element={<ViewAllAccounts />} />
+                            <Route path="/manager/accounts" element={<ViewAllAccounts />} />
                             <Route path="*" element={<ErrorPage />} />
                         </Route>
                     </Routes>

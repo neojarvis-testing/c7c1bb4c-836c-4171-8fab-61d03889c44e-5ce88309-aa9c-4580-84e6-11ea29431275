@@ -20,7 +20,7 @@ export default function Header() {
             <nav className='navbar navbar-expand-lg navbar-dark bg-dark shadow sticky-top'>
                 <div className='container-fluid'>
                     <a className='navbar-brand d-flex align-items-center' href='/'>
-                        <img src='logo512.png'
+                        <img src='/logo512.png'
                             alt="Logo"
                             width="40"
                             height="40"
@@ -59,7 +59,7 @@ export default function Header() {
                                     data-bs-toggle="dropdown"
                                     aria-expanded="false"
                                 >
-                                    <img src="logo192.png"
+                                    <img src="/logo192.png"
                                         alt="User"
                                         width="30"
                                         height="30"
