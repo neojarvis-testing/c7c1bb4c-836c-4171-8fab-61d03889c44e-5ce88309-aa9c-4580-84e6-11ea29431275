@@ -1,6 +1,10 @@
 import React, { useContext } from 'react';
 import { UserContext } from '../context/UserContext';
 import { useNavigate } from 'react-router-dom';
+import CustomerNavBar from '../CustomerComponents/CustomerNavbar';
+import TellerNavBar from '../TellerComponents/TellerNavbar';
+import ManagerNavBar from '../ManagerComponents/ManagerNavbar';
+import { Badge } from 'react-bootstrap';
 
 export default function Header() {
     const { logoutUser, user } = useContext(UserContext);
@@ -39,8 +43,9 @@ export default function Header() {
                     {/* Navigation Links */}
                     <div className='collapse navbar-collapse' id="navbarNav">
                         <ul className='navbar-nav ms-auto'>
-                            <li className='nav-item'><a className='nav-link' href='/'>Home</a></li>
-                            <li className='nav-item'><a className='nav-link' href='/about'>About</a></li>
+                            { user.userRole == "Customer" && <CustomerNavBar />}
+                            { user.userRole == "Manager" && <ManagerNavBar />}
+                            { user.userRole == "Teller" && <TellerNavBar />}
                             {/* User dropdown */}
                             <li className='nav-item dropdown'>
                                 <a className='nav-link dropdown-toggle d-flex align-items-center'
@@ -56,7 +61,8 @@ export default function Header() {
                                         height="30"
                                         className='rounded-circle me-2'
                                     />
-                                    <span>{user ? user.name : ""}</span>
+                                    <span className='me-2'>{user ? user.name : ""}</span>
+                                    <Badge bg="dark">{user ? user.userRole : ""}</Badge>
                                 </a>
                                 <ul className='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdown'>
                                     <li>

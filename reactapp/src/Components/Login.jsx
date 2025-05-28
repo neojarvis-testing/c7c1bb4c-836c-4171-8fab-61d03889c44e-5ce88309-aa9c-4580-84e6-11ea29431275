@@ -54,8 +54,8 @@ const Login = () => {
                 <Container>
                     <Row>
                         <Col className='login_gradient p-4'>
-                            <h1>Bank Vault</h1>
-                            <p>Manage your finance seemlesly with Bank Vault. Login into access your account and perform transactions effectively</p>
+                            <h1>BTMS</h1>
+                            <p>Manage your finance seemlesly with BTMS. Login into access your account and perform transactions effectively</p>
                         </Col>
                         <Col className='login_gradient'>
                             <Card className="p-4 m-4">

@@ -57,7 +57,7 @@ namespace dotnetapp.Controllers
                 return Ok(new {
                     UserId = user.UserId,
                     Name = user.Accounts != null && user.Accounts.Count > 0 ? user.Accounts[0].AccountHolderName : user.Email,
-                    Role = user.UserRole,
+                    UserRole = user.UserRole,
                     Email = user.Email,
                     Token = token
                 });
