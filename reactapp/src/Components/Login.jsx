@@ -84,7 +84,7 @@ const Login = () => {
                                         <Button type="submit" className='w-100'>Login</Button>
                                     </Form.Group>
                                     <Form.Group className='mb-3'>
-                                        <p>Don't have an account? <a className='app_link'>Signup</a></p>
+                                        <p>Don't have an account? <a className='app_link' href='/signup'>Signup</a></p>
                                     </Form.Group>
                                 </Form>
                             </Card>

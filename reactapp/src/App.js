@@ -2,6 +2,7 @@ import "./App.css"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import ErrorPage from "./Components/ErrorPage";
 import Login from "./Components/Login";
+import Signup from "./Components/Signup";
 import { UserProvider } from "./context/UserContext";
 import PrivateRoute from "./Components/PrivateRoute";
 import Layout from "./Components/Layout"
@@ -14,6 +15,7 @@ function App() {
                 <BrowserRouter>
                     <Routes>
                         <Route path="login" element={<Login />} />
+                        <Route path="signup" element={<Signup />} />
                         <Route path="/"
                             element={
                                 <PrivateRoute>

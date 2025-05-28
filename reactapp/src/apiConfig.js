@@ -11,3 +11,13 @@ export const apiLoginAsync = async (loginData) => {
         return { success: false, message: error.response?.data };
     }
 }
+
+export const apiRegisterAsync = async (userData) => {
+    try {
+        const response = await axios.post(`${serviceUrl}/api/register`, userData);
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.log("apiRegisterAsync error:", error);
+        return { success: false, message: error.response?.data };
+    }
+}
