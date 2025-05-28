@@ -31,21 +31,21 @@ namespace dotnetapp.Controllers
             try
             {
                 if (login == null ||
-                    string.IsNullOrEmpty(login.Username) ||
+                    string.IsNullOrEmpty(login.Email) ||
                     string.IsNullOrEmpty(login.Password))
                 {
                     return BadRequest();
                 }
 
-                var user = await _authService.GetUserByUsernameAsync(login.Username);
+                var user = await _authService.GetUserByUsernameAsync(login.Email);
                 if (user == null)
                 {
-                    return Unauthorized("Invalid username or password");
+                    return Unauthorized("Invalid email or password");
                 }
 
                 if (CryptoLib.Hash(login.Password) != user.Password)
                 {
-                    return Unauthorized("Invalid username or password");
+                    return Unauthorized("Invalid email or password");
                 }
 
                 var token = TokenLib.Newtoken(user.Username, 
@@ -57,6 +57,7 @@ namespace dotnetapp.Controllers
                 return Ok(new {
                     UserId = user.UserId,
                     Name = user.Accounts != null && user.Accounts.Count > 0 ? user.Accounts[0].AccountHolderName : user.Email,
+                    Role = user.UserRole,
                     Email = user.Email,
                     Token = token
                 });
