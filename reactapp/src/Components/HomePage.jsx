@@ -37,8 +37,8 @@ const HomePage = () => {
                     <Col>
                         <h2 className='home_title'>Contact Us</h2>
                         <ul className='contact_details'>
-                            <li><span className='me-2'> &#9993; </span>mailto:support@bankvault.com</li>
-                            <li><span className='ms-1 me-2'> &#128383; </span>987-654-3210</li>
+                            <li><span className='me-2'> &#9993; </span><a href="mailto:support@bankvault.com">support@bankvault.com</a></li>
+                            <li><span className='ms-1 me-2'> &#128383;</span><a href="tel:9876543210">987-654-3210</a></li>
                         </ul>
                     </Col>
                 </Row>    

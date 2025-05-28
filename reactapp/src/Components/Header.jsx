@@ -43,13 +43,17 @@ export default function Header() {
                     {/* Navigation Links */}
                     <div className='collapse navbar-collapse' id="navbarNav">
                         <ul className='navbar-nav ms-auto'>
-                            { user.userRole == "Customer" && <CustomerNavBar />}
-                            { user.userRole == "Manager" && <ManagerNavBar />}
-                            { user.userRole == "Teller" && <TellerNavBar />}
+                            { user.userRole === "Customer" && <CustomerNavBar />}
+                            { user.userRole === "Manager" && <ManagerNavBar />}
+                            { user.userRole === "Teller" && <TellerNavBar />}
+                            <li>
+                                <span className='notification_icon'>&#128276;</span>
+                                <span className='notification_count'>2</span>
+                            </li>
                             {/* User dropdown */}
                             <li className='nav-item dropdown'>
                                 <a className='nav-link dropdown-toggle d-flex align-items-center'
-                                    href='#'
+                                    href='/'
                                     id="navbarDropdown"
                                     role="button"
                                     data-bs-toggle="dropdown"
@@ -66,7 +70,7 @@ export default function Header() {
                                 </a>
                                 <ul className='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdown'>
                                     <li>
-                                        <a className='dropdown-item' href='#' onClick={() => handleSignout()}>Log out</a>
+                                        <a className='dropdown-item' href='/' onClick={() => handleSignout()}>Log out</a>
                                     </li>
                                 </ul>
                             </li>

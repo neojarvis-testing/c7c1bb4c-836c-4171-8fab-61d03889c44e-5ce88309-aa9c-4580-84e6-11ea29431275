@@ -53,7 +53,7 @@ const Signup = () => {
                 await Toast.fire({
                     icon: "success",
                     title: "User Registration is Successful!"
-                })
+                });
                 navigate("/");
             } else {
                 //setError(response.message);

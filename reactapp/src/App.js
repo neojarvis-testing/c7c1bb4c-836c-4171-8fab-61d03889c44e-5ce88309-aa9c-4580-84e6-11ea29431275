@@ -7,6 +7,7 @@ import { UserProvider } from "./context/UserContext";
 import PrivateRoute from "./Components/PrivateRoute";
 import Layout from "./Components/Layout"
 import HomePage from "./Components/HomePage";
+import ViewAllAccounts from "./ManagerComponents/ViewAllAccountsComponent"
 
 function App() {
     return (
@@ -24,6 +25,7 @@ function App() {
                             }
                         >
                             <Route index element={<HomePage />} />
+                            <Route path="/accounts" element={<ViewAllAccounts />} />
                             <Route path="*" element={<ErrorPage />} />
                         </Route>
                     </Routes>

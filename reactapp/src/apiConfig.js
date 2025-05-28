@@ -7,7 +7,7 @@ export const apiLoginAsync = async (loginData) => {
         const response = await axios.post(`${serviceUrl}/api/login`, loginData);
         return { success: true, data: response.data };
     } catch (error) {
-        console.log("apiLogin error:", error);
+        console.error("apiLogin error:", error);
         return { success: false, message: error.response?.data };
     }
 }
@@ -17,7 +17,39 @@ export const apiRegisterAsync = async (userData) => {
         const response = await axios.post(`${serviceUrl}/api/register`, userData);
         return { success: true, data: response.data };
     } catch (error) {
-        console.log("apiRegisterAsync error:", error);
+        console.error("apiRegisterAsync error:", error);
+        return { success: false, message: error.response?.data };
+    }
+}
+
+export const apiGetAllAccountAsync = async (token) => {
+    try {
+        const response = await axios.get(`${serviceUrl}/api/account`, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("apiGetAllAccountAsync error:", error);
+        return { success: false, message: error.response?.data };
+    }
+}
+
+export const apiUpdateAccountStatusAsync = async (token, accountId, status) => {
+    try {
+        const response = await axios.patch(`${serviceUrl}/api/account/${accountId}`, 
+        {
+            status: status
+        }, 
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("apiUpdateAccountStatusAsync error:", error);
         return { success: false, message: error.response?.data };
     }
 }
