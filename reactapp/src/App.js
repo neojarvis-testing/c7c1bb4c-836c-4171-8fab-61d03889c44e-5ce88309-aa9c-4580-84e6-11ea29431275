@@ -7,7 +7,10 @@ import { UserProvider } from "./context/UserContext";
 import PrivateRoute from "./Components/PrivateRoute";
 import Layout from "./Components/Layout"
 import HomePage from "./Components/HomePage";
+// Mnager
 import ViewAllAccounts from "./ManagerComponents/ViewAllAccountsComponent"
+// Customer
+import Account from "./CustomerComponents/AccountComponent";
 
 function App() {
     return (
@@ -25,7 +28,10 @@ function App() {
                             }
                         >
                             <Route index element={<HomePage />} />
+                            {/* Manager */}
                             <Route path="/manager/accounts" element={<ViewAllAccounts />} />
+                            {/* Customer */}
+                            <Route path="/customer/accounts" element={<Account />} />
                             <Route path="*" element={<ErrorPage />} />
                         </Route>
                     </Routes>

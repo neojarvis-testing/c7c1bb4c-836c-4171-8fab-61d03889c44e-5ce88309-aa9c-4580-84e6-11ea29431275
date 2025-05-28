@@ -36,6 +36,20 @@ export const apiGetAllAccountAsync = async (token) => {
     }
 }
 
+export const apiGetUserAccountAsync = async (user) => {
+    try {
+        const response = await axios.get(`${serviceUrl}/api/account/user/${user.userId}`, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("apiGetUserAccountAsync error:", error);
+        return { success: false, message: error.response?.data };
+    }
+}
+
 export const apiUpdateAccountStatusAsync = async (token, accountId, status) => {
     try {
         const response = await axios.patch(`${serviceUrl}/api/account/${accountId}`, 

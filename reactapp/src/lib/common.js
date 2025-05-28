@@ -42,3 +42,16 @@ export const viewDateTime = (date) => {
         return new Date(date).toLocaleString();
     }
 }
+
+export const getBadgeBgForStatus = (status) => {
+    switch (status){
+        case "Active":
+            return "primary";
+        case "Pending":
+            return "info";
+        case "Deactvated":
+            return "secondary";
+        default:
+            return "secondary";
+    }
+}
