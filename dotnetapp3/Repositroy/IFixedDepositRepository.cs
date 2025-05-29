@@ -9,10 +9,9 @@ namespace dotnetapp3.Repositroy
     public interface IFixedDepositRepository
     {
         Task<List<FixedDeposit>> GetAllAsync();
-        Task<List<FixedDeposit>> GetFixedDepositAccountsByUserIdAsync(int userId);
-        Task<List<FixedDeposit>> GetFixedDepositByAccountIdAsync(int accountId);  
-         Task<FixedDeposit> GetFixedDepositAccountsByIdAsync(int id);      
         Task<FixedDeposit> CreateFixedDepositAccountAsync(FixedDepositViewModel account);
-        Task<bool> UpdateFixedDepositAccountAsync(FixedDepositViewModel account);        
+        Task<bool> CloseFixedDepositAccountByIdAsync(int id); 
+        Task<List<FixedDeposit>> GetFixedDepositAccountsByUserIdAsync(int userId); 
+        Task<List<FixedDeposit>> GetFixedDepositByAccountIdAsync(int accountId);
     }
 }

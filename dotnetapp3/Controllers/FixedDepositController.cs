@@ -5,27 +5,71 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using dotnetapp3.Services;
 using dotnetapp3.ViewModels;
+using dotnetapp3.Exceptions;
+using Microsoft.AspNetCore.Authorization;
+
 namespace dotnetapp3.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
     public class FixedDepositController : ControllerBase
     {
-        private readonly IFixedDepositService _fixedDepositService;
-
-        public FixedDepositController(IFixedDepositService fixedDepositService){
-            _fixedDepositService = fixedDepositService;
+        private readonly IFixedDepositService _FixedDepositService;
+        public FixedDepositController(IFixedDepositService FixedDepositService){
+            _FixedDepositService = FixedDepositService;
         }
 
         [HttpGet]
-        [Route("/FixedDepositGetAll")]
+        [Authorize(Roles = "Manager, Teller")]
+        [Route("/api/fixedDeposit")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _fixedDepositService.GetAllAsync());
+            try{
+                var data = await _FixedDepositService.GetAllAsync();
+                return Ok(data);
+            }catch(Exception ex){
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Customer")]
+        [Route("/api/FixedDeposit")]
+        public async Task<IActionResult> CreateFixedDepositAccountAsync(FixedDepositViewModel account)
+        {
+            try
+            {
+                var createdAccount = await _FixedDepositService.CreateFixedDepositAccountAsync(account);
+                return StatusCode(201, createdAccount);
+            }
+            catch (InvalidValueTypeException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Manager")]
+        [Route("/api/FixedDeposit/close/{id}")]
+        public async Task<IActionResult> CloseFixedDepositAccountByIdAsync(int id)
+        {
+            try
+            {
+                var isUpdated = await _FixedDepositService.CloseFixedDepositAccountByIdAsync(id);
+                return isUpdated ? Ok() : BadRequest();
+            }
+            catch(Exception ex){
+                return StatusCode(500);
+            }
         }
 
         [HttpGet]
-        [Route("/GetFixedDepositAccountsByUserIdAsync{userId}")]
+        [Authorize(Roles = "Customer")]
+        [Route("/api/FixedDeposit/user/{userId}")]
         public async Task<IActionResult> GetFixedDepositAccountsByUserIdAsync(int userId)
         {
             try
@@ -34,15 +78,17 @@ namespace dotnetapp3.Controllers
                 {
                     throw new ArgumentException("Invalid UserId-"+userId);
                 }
-                return  Ok(await _fixedDepositService.GetFixedDepositAccountsByUserIdAsync(userId));
+                var data = await _FixedDepositService.GetFixedDepositAccountsByUserIdAsync(userId);
+                return  Ok(data);
             }
             catch(Exception ex){
-                return NotFound();
+                 return StatusCode(500);
             }
         }
 
         [HttpGet]
-         [Route("/GetFixedDepositByAccountIdAsync{accountId}")]
+        [Route("/api/FixedDeposit/account/{accountId}")]
+        [Authorize(Roles = "Customer, Teller, Manager")]
         public async Task<IActionResult> GetFixedDepositByAccountIdAsync(int accountId)
         {
             try
@@ -51,71 +97,12 @@ namespace dotnetapp3.Controllers
                 {
                     throw new ArgumentException("Invalid AccountId - "+accountId);
                 }
-                return  Ok(await _fixedDepositService.GetFixedDepositByAccountIdAsync(accountId));
+                var data = await _FixedDepositService.GetFixedDepositByAccountIdAsync(accountId);
+                return  Ok(data);
             }
             catch(Exception ex){
-                return NotFound();
+                return StatusCode(500);
             }
         }
-        [HttpGet]
-        [Route("/GetFixedDepositAccountsByIdAsync{fdid}")]
-        public async Task<IActionResult> GetFixedDepositAccountsByIdAsync(int fdid)
-        {
-            try
-            {
-                if(fdid <= 0)
-                {
-                    throw new ArgumentException("Invalid FDID - "+fdid);
-                }
-                return  Ok(await _fixedDepositService.GetFixedDepositAccountsByIdAsync(fdid));
-            }
-            catch(Exception ex){
-                return NotFound();
-            }
-        }
-
-         [HttpPost]
-         [Route("/CreateFixedDepositAccountAsync")]
-        public async Task<IActionResult> CreateFixedDepositAccountAsync(FixedDepositViewModel account)
-        {
-            try
-            {
-                if(account == null)
-                {
-                    throw new ArgumentException("Account is Null");
-                }
-                if(account.FDId <= 0)
-                {
-                    throw new ArgumentException("Invalid FDID  - "+account.FDId);
-                }
-                return  Ok(await _fixedDepositService.CreateFixedDepositAccountAsync(account));
-            }
-            catch(Exception ex){
-                return NotFound();
-            }
-        }
-
-        [HttpPut]
-        [Route("/UpdateFixedDepositAccountAsync")]
-        public async Task<IActionResult> UpdateFixedDepositAccountAsync(FixedDepositViewModel account)
-        {
-            try
-            {
-                if(account == null)
-                {
-                    throw new ArgumentException("Account is Null");
-                }
-                if(account.FDId <= 0)
-                {                 
-                    throw new ArgumentException("Invalid FDID  - "+account.FDId);
-                }
-                return  Ok(await _fixedDepositService.UpdateFixedDepositAccountAsync(account));
-            }
-            catch(Exception ex){
-                return NotFound();
-            }
-        }
-
-
     }
 }

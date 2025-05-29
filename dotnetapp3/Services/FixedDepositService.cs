@@ -6,32 +6,44 @@ using dotnetapp3.Repositroy;
 using dotnetapp3.ViewModels;
 using dotnetapp3.Data;
 using CommonLibrary.Models;
+using dotnetapp3.Exceptions;
 namespace dotnetapp3.Services
 {
     public class FixedDepositService : IFixedDepositService
     {
-        private readonly IFixedDepositRepository _fixedDepositRepository;
-        public FixedDepositService(IFixedDepositRepository fixedDepositRepository){
-            _fixedDepositRepository = fixedDepositRepository;
+        private readonly IFixedDepositRepository _FixedDepositRepository;
+        public FixedDepositService(IFixedDepositRepository FixedDepositRepository){
+            _FixedDepositRepository = FixedDepositRepository;
         }
 
         public async Task<List<FixedDeposit>> GetAllAsync(){
-            return await _fixedDepositRepository.GetAllAsync();
+            return await _FixedDepositRepository.GetAllAsync();
         }
+        
+        public async Task<FixedDeposit> CreateFixedDepositAccountAsync(FixedDepositViewModel account)
+        {
+            if(account.UserId <=0)
+            {
+                throw InvalidValueTypeException.WithType(account.UserId.ToString());
+            } 
+            if(account.UserId <=0)
+            {
+                throw InvalidValueTypeException.WithType(account.AccountId.ToString());
+            }    
+            var newAccount = await _FixedDepositRepository. CreateFixedDepositAccountAsync(account);
+            return newAccount;
+        }
+
+        public async Task<bool> CloseFixedDepositAccountByIdAsync(int id){
+          return await _FixedDepositRepository.CloseFixedDepositAccountByIdAsync(id);  
+        }
+        
         public async Task<List<FixedDeposit>> GetFixedDepositAccountsByUserIdAsync(int userId){
-            return await _fixedDepositRepository.GetFixedDepositAccountsByUserIdAsync(userId);
+            return await _FixedDepositRepository.GetFixedDepositAccountsByUserIdAsync(userId);
         }
+
         public async Task<List<FixedDeposit>> GetFixedDepositByAccountIdAsync(int accountId){
-            return await _fixedDepositRepository.GetFixedDepositByAccountIdAsync(accountId);
-        }
-        public async Task<FixedDeposit> GetFixedDepositAccountsByIdAsync(int id){
-            return await _fixedDepositRepository.GetFixedDepositAccountsByIdAsync(id);
-        }      
-        public async Task<FixedDeposit> CreateFixedDepositAccountAsync(FixedDepositViewModel account){
-         return await _fixedDepositRepository. CreateFixedDepositAccountAsync(account);  
-        }
-        public async Task<bool> UpdateFixedDepositAccountAsync(FixedDepositViewModel account){
-          return await _fixedDepositRepository.UpdateFixedDepositAccountAsync(account);  
+            return await _FixedDepositRepository.GetFixedDepositByAccountIdAsync(accountId);
         } 
         
     }

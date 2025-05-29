@@ -20,16 +20,49 @@ namespace dotnetapp3.Repositroy
         }
 
         public async Task<List<FixedDeposit>> GetAllAsync(){
-            var fixedDepositedata = await _dbContext.FixedDeposits.ToListAsync();
-            return fixedDepositedata ?? new List<FixedDeposit>();
+            var FixedDepositedata = await _dbContext.FixedDeposits.ToListAsync();
+            return FixedDepositedata ?? new List<FixedDeposit>();
         }
 
+        public async Task<FixedDeposit> CreateFixedDepositAccountAsync(FixedDepositViewModel account){
+            var newAccount = new FixedDeposit(){
+                FDId = 0,
+                UserId = account.UserId,
+                AccountId = account.AccountId,
+                PrincipalAmount = account.PrincipalAmount,
+                InterestRate = account.InterestRate,
+                TentureMonths = account.TentureMonths,
+                MatuarityAmount = account.MatuarityAmount,
+                Status = account.Status,
+                DateCreated = account.DateCreated,
+                DateClosed = account.DateClosed
+            };
+            _dbContext.Add(newAccount);
+            await _dbContext.SaveChangesAsync();
+            return newAccount;
+        }
+
+        public async Task<bool> CloseFixedDepositAccountByIdAsync(int id){
+
+             var dbAccount = await _dbContext.FixedDeposits.FirstOrDefaultAsync(a => a.FDId == id);
+            if (dbAccount == null || dbAccount.FDId <= 0)
+            {
+                return false;
+            }
+            
+            dbAccount.Status = "Closed";
+            dbAccount.DateClosed = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }   
+        
         public async Task<List<FixedDeposit>> GetFixedDepositAccountsByUserIdAsync(int userId){
              var accounts = await _dbContext.FixedDeposits
                             .Where(a => a.UserId == userId)
                             .ToListAsync();
             return accounts ?? new List<FixedDeposit>();
         }
+
        public async  Task<List<FixedDeposit>> GetFixedDepositByAccountIdAsync(int accountId){
          var accounts = await _dbContext.FixedDeposits
                             .Where(a => a.AccountId == accountId)
@@ -37,45 +70,7 @@ namespace dotnetapp3.Repositroy
             return accounts ?? new List<FixedDeposit>();
        }
 
-       public async Task<FixedDeposit> GetFixedDepositAccountsByIdAsync(int id)
-       {
-             var accounts = await _dbContext.FixedDeposits
-                            .Where(a => a.FDId == id)
-                            .FirstOrDefaultAsync();
-            return accounts ?? new FixedDeposit();
-        }
-
-        public async Task<FixedDeposit> CreateFixedDepositAccountAsync(FixedDepositViewModel account){
-             var dbAccount = await GetFixedDepositAccountsByIdAsync(account.AccountId);
-            if (dbAccount == null)
-            {
-                return null;
-            }
-
-            _dbContext.Entry(dbAccount).CurrentValues.SetValues(account);
-            await _dbContext.SaveChangesAsync();
-            return dbAccount;
-        }
-
-        public async Task<bool> UpdateFixedDepositAccountAsync(FixedDepositViewModel account){
-                        var dbAccount = await GetFixedDepositAccountsByIdAsync(account.FDId);
-            if (dbAccount == null)
-            {
-                return false;
-            }
-            
-            dbAccount.UserId = account.UserId;
-            dbAccount.AccountId = account.AccountId;
-            dbAccount.PrincipalAmount = account.PrincipalAmount;
-            dbAccount.InterestRate = account.InterestRate;
-            dbAccount.TentureMonths = account.TentureMonths;
-            dbAccount.MatuarityAmount = account.MatuarityAmount;
-            dbAccount.Status = account.Status;
-            dbAccount.DateCreated = account.DateCreated;
-            dbAccount.DateClosed = account.DateClosed;
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }        
+     
 
     }
 }

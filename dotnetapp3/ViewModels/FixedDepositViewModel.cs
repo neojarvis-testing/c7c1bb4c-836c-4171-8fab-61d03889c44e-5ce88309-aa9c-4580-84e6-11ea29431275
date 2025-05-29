@@ -7,7 +7,6 @@ namespace dotnetapp3.ViewModels
 {
     public class FixedDepositViewModel
     {     
-        public int FDId { get; set; }
         public int UserId { get; set; }
         public int AccountId { get; set; }
         public Decimal PrincipalAmount { get; set; }
@@ -16,6 +15,6 @@ namespace dotnetapp3.ViewModels
         public Decimal MatuarityAmount { get; set; }
         public string Status { get; set; }
         public DateTime DateCreated { get; set; }
-        public DateTime? DateClosed { get; set; }   
+        public DateTime DateClosed { get; set; }   
     }
 }
