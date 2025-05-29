@@ -7,7 +7,6 @@ namespace dotnetapp3.ViewModels
 {
     public class RecurringDepositViewModel
     {
-        public int RDId { get; set; }
         public int UserId { get; set; }
         public int AccountId { get; set; }
         public Decimal MonthlyDeposit { get; set; }
@@ -16,7 +15,7 @@ namespace dotnetapp3.ViewModels
         public Decimal MatuarityAmount { get; set; }
         public string Status { get; set; }
         public DateTime DateCreated { get; set; }
-        public DateTime? DateClosed { get; set; } 
+        public DateTime DateClosed { get; set; } 
         
     }
 }

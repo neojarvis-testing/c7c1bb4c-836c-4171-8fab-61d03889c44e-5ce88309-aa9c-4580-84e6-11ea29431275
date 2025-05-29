@@ -30,6 +30,39 @@ namespace dotnetapp3.Repositroy
                             .ToListAsync();
             return accounts ?? new List<RecurringDeposit>();
         }
+
+        public async Task<RecurringDeposit> CreateRecurringDepositAccountAsync(RecurringDepositViewModel account){
+            var newAccount = new RecurringDeposit(){
+                RDId = 0,
+                UserId = account.UserId,
+                AccountId = account.AccountId,
+                MonthlyDeposit = account.MonthlyDeposit,
+                InterestRate = account.InterestRate,
+                TentureMonths = account.TentureMonths,
+                MatuarityAmount = account.MatuarityAmount,
+                Status = account.Status,
+                DateCreated = account.DateCreated,
+                DateClosed = account.DateClosed
+            };
+            _dbContext.Add(newAccount);
+            await _dbContext.SaveChangesAsync();
+            return newAccount;
+        }
+
+        public async Task<bool> CloseRecurringDepositAccountByIdAsync(int id){
+
+             var dbAccount = await _dbContext.RecurringDeposits.FirstOrDefaultAsync(a => a.RDId == id);
+            if (dbAccount == null || dbAccount.RDId <= 0)
+            {
+                return false;
+            }
+            
+            dbAccount.Status = "Closed";
+            dbAccount.DateClosed = DateTime.Now;
+            await _dbContext.SaveChangesAsync();
+            return true;
+        }   
+
        public async  Task<List<RecurringDeposit>> GetRecurringDepositByAccountIdAsync(int accountId){
          var accounts = await _dbContext.RecurringDeposits
                             .Where(a => a.AccountId == accountId)
@@ -37,45 +70,5 @@ namespace dotnetapp3.Repositroy
             return accounts ?? new List<RecurringDeposit>();
        }
 
-       public async Task<RecurringDeposit> GetRecurringDepositAccountsByIdAsync(int id)
-       {
-             var accounts = await _dbContext.RecurringDeposits
-                            .Where(a => a.RDId == id)
-                            .FirstOrDefaultAsync();
-            return accounts ?? new RecurringDeposit();
-        }
-
-        public async Task<RecurringDeposit> CreateRecurringDepositAccountAsync(RecurringDepositViewModel account){
-             var dbAccount = await GetRecurringDepositAccountsByIdAsync(account.AccountId);
-            if (dbAccount == null)
-            {
-                return null;
-            }
-
-            _dbContext.Entry(dbAccount).CurrentValues.SetValues(account);
-            await _dbContext.SaveChangesAsync();
-            return dbAccount;
-        }
-
-        public async Task<bool> UpdateRecurringDepositAccountAsync(RecurringDepositViewModel account){
-                        var dbAccount = await GetRecurringDepositAccountsByIdAsync(account.RDId);
-            if (dbAccount == null)
-            {
-                return false;
-            }
-            
-            dbAccount.UserId = account.UserId;
-            dbAccount.AccountId = account.AccountId;
-            dbAccount.MonthlyDeposit = account.MonthlyDeposit;
-            dbAccount.InterestRate = account.InterestRate;
-            dbAccount.TentureMonths = account.TentureMonths;
-            dbAccount.MatuarityAmount = account.MatuarityAmount;
-            dbAccount.Status = account.Status;
-            dbAccount.DateCreated = account.DateCreated;
-            dbAccount.DateClosed = account.DateClosed;
-            await _dbContext.SaveChangesAsync();
-            return true;
-        }        
-        
     }
 }

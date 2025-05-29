@@ -16,10 +16,8 @@ namespace dotnetapp3.Services
     {
         Task<List<RecurringDeposit>> GetAllAsync();
         Task<List<RecurringDeposit>> GetRecurringDepositAccountsByUserIdAsync(int userId);
-        Task<List<RecurringDeposit>> GetRecurringDepositByAccountIdAsync(int accountId);  
-         Task<RecurringDeposit> GetRecurringDepositAccountsByIdAsync(int id);      
         Task<RecurringDeposit> CreateRecurringDepositAccountAsync(RecurringDepositViewModel account);
-        Task<bool> UpdateRecurringDepositAccountAsync(RecurringDepositViewModel account);  
-        
+        Task<bool> CloseRecurringDepositAccountByIdAsync(int id);  
+        Task<List<RecurringDeposit>> GetRecurringDepositByAccountIdAsync(int accountId);
     }
 }
