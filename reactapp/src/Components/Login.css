@@ -1,0 +1,17 @@
+.login_container
+{
+    width: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login_gradient
+{
+    color: white;
+    background: #020024;
+    background: linear-gradient(90deg,rgba(2,0,36,1)0%,rgba(9,9,121,1)35%,rgba(0,212,255,1)100%);
+    padding: 50px;
+}
+

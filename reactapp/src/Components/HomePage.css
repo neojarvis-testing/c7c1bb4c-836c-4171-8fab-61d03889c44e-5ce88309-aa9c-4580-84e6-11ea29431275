@@ -1,0 +1,27 @@
+.home_title
+{
+    color: #3498DB;
+    font-weight: 400;
+}
+
+.contact_details
+{
+    margin-bottom: 30px;
+}
+
+.contact_details li
+{
+    padding: 5px;
+    font-weight: 500;
+}
+
+.cover_image_container
+{
+    width: 100%;
+    text-align: center;
+}
+
+.cover_image
+{
+    height: 300px;
+}

@@ -1,0 +1,66 @@
+.app_link
+{
+    color:#0d6efd;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.app_error
+{
+    color:#d70346;
+    font-weight: 400;
+}
+
+.notification_icon
+{
+    font-size: 26px;
+    cursor: pointer;
+}
+
+.notification_count
+{
+    padding: 0px 7px 1px 7px;
+    border-radius: 10px;
+    position: relative;
+    top: -20px;
+    right: 20px;
+    background-color: red;
+    color: white; 
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.page_title
+{
+    padding: 10px 10px 10px 0px;
+}
+
+.message_div
+{
+    width: 100%;
+    text-align: center;
+    font-weight: 500;
+    font-size: 24px;
+    padding: 100px 20px 100px 20px;
+}
+
+.sticky-bottom-footer
+{
+    position: fixed;
+    bottom: 0px;
+    width: 100%
+}
+
+.account_type
+{
+    position: absolute;
+    /* transform: rotate(315deg); */
+    background-color: #d70346;
+    color: white;
+    padding: 4px 8px 4px 8px;
+    font-size: 14px;
+    display: block;
+    top:0px;
+    left: 0px;
+    font-weight: 500;
+}

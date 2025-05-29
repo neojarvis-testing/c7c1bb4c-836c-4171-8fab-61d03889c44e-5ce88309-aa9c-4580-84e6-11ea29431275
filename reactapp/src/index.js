@@ -6,7 +6,8 @@ import { QueryClient, QueryClientProvider } from 'react-query'; // Import QueryC
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 const queryClient = new QueryClient(); // Create a QueryClient instance
 

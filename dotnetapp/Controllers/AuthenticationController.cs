@@ -8,6 +8,7 @@ using CommonLibrary.Models;
 using dotnetapp.ViewModels;
 using dotnetapp.Services;
 using dotnetapp.Exceptions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace dotnetapp.Controllers
 {
@@ -24,26 +25,27 @@ namespace dotnetapp.Controllers
 
         [HttpPost]
         [Route("api/login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginVM login)
         {
             try
             {
                 if (login == null ||
-                    string.IsNullOrEmpty(login.Username) ||
+                    string.IsNullOrEmpty(login.Email) ||
                     string.IsNullOrEmpty(login.Password))
                 {
                     return BadRequest();
                 }
 
-                var user = await _authService.GetUserByUsernameAsync(login.Username);
+                var user = await _authService.GetUserByUsernameAsync(login.Email);
                 if (user == null)
                 {
-                    return Unauthorized("Invalid username or password");
+                    return Unauthorized("Invalid email or password");
                 }
 
                 if (CryptoLib.Hash(login.Password) != user.Password)
                 {
-                    return Unauthorized("Invalid username or password");
+                    return Unauthorized("Invalid email or password");
                 }
 
                 var token = TokenLib.Newtoken(user.Username, 
@@ -55,6 +57,7 @@ namespace dotnetapp.Controllers
                 return Ok(new {
                     UserId = user.UserId,
                     Name = user.Accounts != null && user.Accounts.Count > 0 ? user.Accounts[0].AccountHolderName : user.Email,
+                    UserRole = user.UserRole,
                     Email = user.Email,
                     Token = token
                 });
@@ -67,6 +70,7 @@ namespace dotnetapp.Controllers
 
         [HttpPost]
         [Route("api/register")]
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterUser([FromBody] User user)
         {
             try
