@@ -31,14 +31,20 @@ namespace dotnetapp3.Repository
                 PrincipalAmount = account.PrincipalAmount,
                 InterestRate = account.InterestRate,
                 TentureMonths = account.TentureMonths,
-                MatuarityAmount = account.MatuarityAmount,
-                Status = account.Status,
-                DateCreated = account.DateCreated,
-                DateClosed = account.DateClosed
+                MatuarityAmount = GetMatuarityAmount(account.PrincipalAmount, account.InterestRate, account.TentureMonths),
+                Status = DepositStatusEnum.Active.ToString(),
+                DateCreated = DateTime.Now,
+                DateClosed = null
             };
             _dbContext.Add(newAccount);
             await _dbContext.SaveChangesAsync();
             return newAccount;
+        }
+
+        private Decimal GetMatuarityAmount(decimal amount, decimal interestRate, int months)
+        {
+            var monthlyInterest = (amount * (interestRate/100))/12;
+            return amount + monthlyInterest * months;
         }
 
         public async Task<bool> CloseFixedDepositAccountByIdAsync(int id){

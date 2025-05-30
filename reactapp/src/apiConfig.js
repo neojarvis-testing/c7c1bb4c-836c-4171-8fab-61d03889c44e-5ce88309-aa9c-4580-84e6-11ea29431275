@@ -83,3 +83,34 @@ export const apiCreateAccountAsync = async (token, account) => {
         return { success: false, message: error.response?.data };
     }
 }
+
+// FD
+export const apiCreateFDAsync = async (token, deposit) => {
+    try {
+        const response = await axios.post(`${serviceUrl}/api/fixeddeposit`, deposit, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("apiCreateFDAsync error:", error);
+        return { success: false, message: error.response?.data };
+    }
+}
+
+// RD
+
+export const apiCreateRDAsync = async (token, deposit) => {
+    try {
+        const response = await axios.post(`${serviceUrl}/api/recurringdeposit`, deposit, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("apiCreateRDAsync error:", error);
+        return { success: false, message: error.response?.data };
+    }
+}

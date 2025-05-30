@@ -1,12 +1,15 @@
 import { Card, Row, Col, Badge, Button, Alert } from 'react-bootstrap';
 import { viewAmount, viewDateTime, getBadgeBgForStatus } from '../lib/common';
 import "./AccountViewComponent.css"
+import { useNavigate } from 'react-router-dom';
 
 const AccountView = ({ accounts }) => {
+    const navigate = useNavigate();
+
     const renderAcccount = (account, index) => {
         return (
             <>
-                <Col sm={12} md={6}>
+                <Col sm={12} md={6} id={`accounts_${index}`}>
                     <Card className='m-2 p-4'>
                         <Card.Body>
                             <Card.Title>
@@ -47,7 +50,9 @@ const AccountView = ({ accounts }) => {
                                 <Row>
                                     <Col className="mt-4">
                                         {account.status === "Active" && (<>
-                                            <Button className='me-2'>Open Fixed Deposit</Button>
+                                            <Button className='me-2' onClick={() => {
+                                                navigate(`/customer/fixeddeposits/create/${account.accountId}`)
+                                            }}>Open Fixed Deposit</Button>
                                             <Button>Open Recurring Deposit</Button>
                                         </>)}
                                         {account.status !== "Active" && (<>
