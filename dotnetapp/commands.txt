@@ -8,6 +8,9 @@ dotnet ef database update 0
 
 dotnet ef migrations remove
 
+// Add reference project
+dotnet add reference ../CommonLibrary/CommonLibrary.csproj
+
 //sql 
 alter database appdb1 set single_user with rollback immediate
 drop database appdb1
