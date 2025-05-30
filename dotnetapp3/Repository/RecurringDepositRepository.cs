@@ -48,7 +48,7 @@ namespace dotnetapp3.Repository
             var dbAccount = await _dbContext.Accounts
                 .Where(a => a.AccountId == account.AccountId)
                 .FirstOrDefaultAsync();
-            dbAccount.Balance -= account.PrincipalAmount;
+            dbAccount.Balance -= account.MonthlyDeposit;
 
             _dbContext.Add(newAccount);
             await _dbContext.SaveChangesAsync();
@@ -70,7 +70,7 @@ namespace dotnetapp3.Repository
             }
             
             var dbAccount = await _dbContext.Accounts
-                .Where(a => a.AccountId == dsFd.AccountId)
+                .Where(a => a.AccountId == dbDeposit.AccountId)
                 .FirstOrDefaultAsync();
             var closeDate = dbDeposit.DateCreated.AddMonths(dbDeposit.TentureMonths);
             if(closeDate < DateTime.Now) // Valid Close
@@ -79,7 +79,7 @@ namespace dotnetapp3.Repository
                 dbDeposit.Status = DepositStatusEnum.Closed.ToString();
             } else { // Premature close
                 var partialInterest = 0; // Need to add logic to calculate partial interest
-                dbAccount.Balance += (dbDeposit.PrincipalAmount + partialInterest);
+                dbAccount.Balance += (dbDeposit.MonthlyDeposit + partialInterest);
                 dbDeposit.Status = DepositStatusEnum.ClosedPrematuarely.ToString();
             }
 
