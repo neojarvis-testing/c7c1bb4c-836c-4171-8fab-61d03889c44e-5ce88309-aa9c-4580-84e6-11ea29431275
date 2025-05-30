@@ -5,14 +5,22 @@ import CustomerNavBar from '../CustomerComponents/CustomerNavbar';
 import TellerNavBar from '../TellerComponents/TellerNavbar';
 import ManagerNavBar from '../ManagerComponents/ManagerNavbar';
 import { Badge } from 'react-bootstrap';
+import { ConfirmToast } from '../lib/common';
 
 export default function Header() {
     const { logoutUser, user } = useContext(UserContext);
     const navigate = useNavigate();
 
-    const handleSignout = () => {
-        logoutUser();
-        navigate('/login');
+    const handleSignout = async () => {
+        var confirmed = await ConfirmToast(
+            "Logout Confirm",
+            "Are you sure you want to logout?"
+        );
+
+        if (confirmed) {
+            logoutUser();
+            navigate('/login');
+        }
     };
 
     return (
@@ -43,9 +51,9 @@ export default function Header() {
                     {/* Navigation Links */}
                     <div className='collapse navbar-collapse' id="navbarNav">
                         <ul className='navbar-nav ms-auto'>
-                            { user.userRole === "Customer" && <CustomerNavBar />}
-                            { user.userRole === "Manager" && <ManagerNavBar />}
-                            { user.userRole === "Teller" && <TellerNavBar />}
+                            {user.userRole === "Customer" && <CustomerNavBar />}
+                            {user.userRole === "Manager" && <ManagerNavBar />}
+                            {user.userRole === "Teller" && <TellerNavBar />}
                             <li>
                                 <span className='notification_icon'>&#128276;</span>
                                 <span className='notification_count'>2</span>
@@ -70,7 +78,10 @@ export default function Header() {
                                 </a>
                                 <ul className='dropdown-menu dropdown-menu-end' aria-labelledby='navbarDropdown'>
                                     <li>
-                                        <a className='dropdown-item' href='/' onClick={() => handleSignout()}>Log out</a>
+                                        <a className='dropdown-item' href='/' onClick={async (e) => {
+                                            e.preventDefault();
+                                            await handleSignout();
+                                        }}>Log out</a>
                                     </li>
                                 </ul>
                             </li>
