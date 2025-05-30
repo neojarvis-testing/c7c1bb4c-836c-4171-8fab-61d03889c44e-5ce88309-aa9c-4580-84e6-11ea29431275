@@ -12,10 +12,5 @@ namespace dotnetapp3.ViewModels
         public Decimal MonthlyDeposit { get; set; }
         public Decimal InterestRate { get; set; }
         public int TentureMonths { get; set; }
-        public Decimal MatuarityAmount { get; set; }
-        public string Status { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime DateClosed { get; set; } 
-        
     }
 }
