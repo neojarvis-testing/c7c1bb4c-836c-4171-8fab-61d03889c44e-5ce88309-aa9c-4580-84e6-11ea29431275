@@ -44,6 +44,12 @@ namespace dotnetapp3.Repository
                 DateCreated = DateTime.Now,
                 DateClosed = null
             };
+
+            var dbAccount = await _dbContext.Accounts
+                .Where(a => a.AccountId == account.AccountId)
+                .FirstOrDefaultAsync();
+            dbAccount.Balance -= account.PrincipalAmount;
+
             _dbContext.Add(newAccount);
             await _dbContext.SaveChangesAsync();
             return newAccount;
@@ -57,14 +63,27 @@ namespace dotnetapp3.Repository
 
         public async Task<bool> CloseRecurringDepositAccountByIdAsync(int id){
 
-             var dbAccount = await _dbContext.RecurringDeposits.FirstOrDefaultAsync(a => a.RDId == id);
-            if (dbAccount == null || dbAccount.RDId <= 0)
+             var dbDeposit = await _dbContext.RecurringDeposits.FirstOrDefaultAsync(a => a.RDId == id);
+            if (dbDeposit == null || dbDeposit.RDId <= 0)
             {
                 return false;
             }
             
-            dbAccount.Status = "Closed";
-            dbAccount.DateClosed = DateTime.Now;
+            var dbAccount = await _dbContext.Accounts
+                .Where(a => a.AccountId == dsFd.AccountId)
+                .FirstOrDefaultAsync();
+            var closeDate = dbDeposit.DateCreated.AddMonths(dbDeposit.TentureMonths);
+            if(closeDate < DateTime.Now) // Valid Close
+            {
+                dbAccount.Balance += dbDeposit.MatuarityAmount;
+                dbDeposit.Status = DepositStatusEnum.Closed.ToString();
+            } else { // Premature close
+                var partialInterest = 0; // Need to add logic to calculate partial interest
+                dbAccount.Balance += (dbDeposit.PrincipalAmount + partialInterest);
+                dbDeposit.Status = DepositStatusEnum.ClosedPrematuarely.ToString();
+            }
+
+            dbDeposit.DateClosed = DateTime.Now;
             await _dbContext.SaveChangesAsync();
             return true;
         }   

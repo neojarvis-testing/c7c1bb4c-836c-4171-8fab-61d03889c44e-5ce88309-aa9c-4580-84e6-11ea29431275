@@ -13,6 +13,7 @@ import ViewAllAccounts from "./ManagerComponents/ViewAllAccountsComponent"
 import Account from "./CustomerComponents/AccountComponent";
 import AccountForm from "./CustomerComponents/AccountForm"
 import OpenFDForm from "./CustomerComponents/OpenFDForm";
+import FixedDeposit from "./CustomerComponents/FixedDepositComponent";
 
 function App() {
     return (
@@ -35,7 +36,7 @@ function App() {
                             {/* Customer */}
                             <Route path="/customer/accounts" element={<Account />} />
                             <Route path="/customer/accounts/create" element={<AccountForm />} />  
-                            <Route path="/customer/fixeddeposits" element={<Account />} />
+                            <Route path="/customer/fixeddeposits" element={<FixedDeposit />} />
                             <Route path="/customer/fixeddeposits/create/:accountId" element={<OpenFDForm />} />
                             <Route path="*" element={<ErrorPage />} />
                         </Route>
