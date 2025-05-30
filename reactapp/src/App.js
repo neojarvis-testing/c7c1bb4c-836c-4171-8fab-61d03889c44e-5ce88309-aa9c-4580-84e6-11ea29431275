@@ -14,6 +14,8 @@ import Account from "./CustomerComponents/AccountComponent";
 import AccountForm from "./CustomerComponents/AccountForm"
 import OpenFDForm from "./CustomerComponents/OpenFDForm";
 import FixedDeposit from "./CustomerComponents/FixedDepositComponent";
+import RecurringDeposit from "./CustomerComponents/RecurringDepositComponent";
+import OpenRDForm from "./CustomerComponents/OpenRDForm";
 
 function App() {
     return (
@@ -38,6 +40,8 @@ function App() {
                             <Route path="/customer/accounts/create" element={<AccountForm />} />  
                             <Route path="/customer/fixeddeposits" element={<FixedDeposit />} />
                             <Route path="/customer/fixeddeposits/create/:accountId" element={<OpenFDForm />} />
+                            <Route path="/customer/recurringdeposits" element={<RecurringDeposit />} />
+                            <Route path="/customer/recurringdeposits/create/:accountId" element={<OpenRDForm />} />
                             <Route path="*" element={<ErrorPage />} />
                         </Route>
                     </Routes>

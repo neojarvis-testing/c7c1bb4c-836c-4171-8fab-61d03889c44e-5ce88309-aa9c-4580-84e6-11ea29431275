@@ -74,7 +74,7 @@ namespace dotnetapp3.Controllers
         }
         
         [HttpPost]
-        [Authorize(Roles = "Manager")]
+        [Authorize(Roles = "Manager, Customer")]
         [Route("close/{id}")]
         public async Task<IActionResult> CloseRecurringDepositAccountByIdAsync(int id)
         {

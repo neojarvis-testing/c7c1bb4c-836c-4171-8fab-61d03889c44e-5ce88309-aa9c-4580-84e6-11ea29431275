@@ -53,7 +53,9 @@ const AccountView = ({ accounts }) => {
                                             <Button className='me-2' onClick={() => {
                                                 navigate(`/customer/fixeddeposits/create/${account.accountId}`)
                                             }}>Open Fixed Deposit</Button>
-                                            <Button>Open Recurring Deposit</Button>
+                                            <Button onClick={() => {
+                                                navigate(`/customer/recurringdeposits/create/${account.accountId}`)
+                                            }}>Open Recurring Deposit</Button>
                                         </>)}
                                         {account.status !== "Active" && (<>
                                             <Alert className='font-small m-0 p-2' key="account_inactive" variant="warning">

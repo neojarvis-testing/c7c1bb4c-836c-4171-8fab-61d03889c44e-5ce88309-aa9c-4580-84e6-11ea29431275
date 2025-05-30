@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import { Badge } from 'react-bootstrap';
 
 export const Toast = Swal.mixin({
     toast: true,
@@ -27,19 +28,25 @@ export const ConfirmToast = async (title, text) => {
 };
 
 export const viewAmount = (amount) => {
-    var dAmount = amount || amount === 0 ? Number(amount).toFixed(2) : "";
+    var dAmount = amount || amount === 0 ? 
+        //Number(amount).toFixed(2) : 
+        Intl.NumberFormat(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        }).format(amount) :
+        "";
     return dAmount;
 }
 
 export const viewDate = (date) => {
     if(date) {
-        return new Date(date).toLocaleDateString();
+        return new Date(date + "Z").toLocaleDateString();
     }
 }
 
 export const viewDateTime = (date) => {
     if(date) {
-        return new Date(date).toLocaleString();
+        return new Date(date + "Z").toLocaleString();
     }
 }
 
@@ -54,4 +61,20 @@ export const getBadgeBgForStatus = (status) => {
         default:
             return "secondary";
     }
+}
+
+export const getBadgeForDepositStatus = (depositStatus) => {
+    var bg = "warning";
+    switch (depositStatus){
+        case "Active":
+            bg = "primary";
+            break;
+        case "Closed":
+            bg = "info";
+            break;
+        default:
+            bg = "warning";
+    }
+
+    return (<Badge bg={bg}>{depositStatus}</Badge>);
 }

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 import { apiGetUserFixedDepositsAsync, apiCloseUserFixedDepositsAsync } from '../apiConfig'
-import { ConfirmToast, Toast, viewAmount, viewDateTime } from '../lib/common';
+import { ConfirmToast, Toast, viewAmount, viewDateTime, getBadgeForDepositStatus } from '../lib/common';
 
 const FixedDeposit = () => {
     const [deposits, setDeposits] = useState([]);
@@ -49,30 +49,30 @@ const FixedDeposit = () => {
                     <Table responsive striped bordered>
                         <thead>
                             <tr>
-                                <th>FD ID</th>
+                                <th className='text-end'>FD ID</th>
                                 <th className='text-end'>Principal Amount</th>
                                 <th className='text-end'>Interest Rate</th>
-                                <th className='text-end'>Tenture</th>
+                                <th className='text-end'>Tenture (Months)</th>
                                 <th className='text-end'>Matuarity Amount</th>
                                 <th>Created Date</th>
-                                <th>Status</th>
+                                <th className='text-center'>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             {deposits.map((deposit, index) => (
                                 <tr key={`deposits_${index}`}>
-                                    <td>{deposit.fdId}</td>
+                                    <td className='text-end'>{deposit.fdId}</td>
                                     <td className='text-end'>{viewAmount(deposit.principalAmount)}</td>
                                     <td className='text-end'>{viewAmount(deposit.interestRate)}</td>
                                     <td className='text-end'>{viewAmount(deposit.tentureMonths)}</td>
                                     <td className='text-end'>{viewAmount(deposit.matuarityAmount)}</td>
                                     <td>{viewDateTime(deposit.dateCreated)}</td>
-                                    <td>{deposit.status}</td>
+                                    <td className='text-center'>{getBadgeForDepositStatus(deposit.status)}</td>
                                     <td>
                                         {(deposit.status === "Active") &&
-                                            <Button variant="info" onClick={() => { 
-                                                closeDeposit(deposit.fdId); 
+                                            <Button variant="info" onClick={() => {
+                                                closeDeposit(deposit.fdId);
                                             }}>
                                                 Close
                                             </Button>
