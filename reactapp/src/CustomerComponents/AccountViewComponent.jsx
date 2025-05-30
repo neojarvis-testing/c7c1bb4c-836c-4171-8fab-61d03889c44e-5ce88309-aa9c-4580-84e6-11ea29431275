@@ -1,4 +1,4 @@
-import { Card, Row, Col, Badge } from 'react-bootstrap';
+import { Card, Row, Col, Badge, Button, Alert } from 'react-bootstrap';
 import { viewAmount, viewDateTime, getBadgeBgForStatus } from '../lib/common';
 import "./AccountViewComponent.css"
 
@@ -44,25 +44,29 @@ const AccountView = ({ accounts }) => {
                                         {viewDateTime(account.dateCreated)}
                                     </Col>
                                 </Row>
+                                <Row>
+                                    <Col className="mt-4">
+                                        {account.status === "Active" && (<>
+                                            <Button className='me-2'>Open Fixed Deposit</Button>
+                                            <Button>Open Recurring Deposit</Button>
+                                        </>)}
+                                        {account.status !== "Active" && (<>
+                                            <Alert className='font-small m-0 p-2' key="account_inactive" variant="warning">
+                                                Account is not active
+                                            </Alert>
+                                        </>)}
+                                    </Col>
+                                </Row>
                             </Card.Title>
-                            <Card.Text>
-
-                            </Card.Text>
                         </Card.Body>
-
                     </Card>
                 </Col>
             </>
-
         );
     };
 
     return (
         <>
-            <h1 className='page_title'> Accounts </h1>
-            {(!accounts || accounts.length === 0) &&
-                <div className='message_div'>No accounts were found.</div>
-            }
             {accounts && (accounts.length > 0) &&
                 <>
                     <Row>

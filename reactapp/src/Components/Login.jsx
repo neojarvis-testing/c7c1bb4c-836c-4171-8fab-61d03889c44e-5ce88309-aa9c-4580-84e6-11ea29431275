@@ -53,7 +53,7 @@ const Login = () => {
             <div className='login_container'>
                 <Container>
                     <Row>
-                        <Col className='login_gradient p-4'>
+                        <Col className='login_gradient p-4 login_container_desc'>
                             <h1>BTMS</h1>
                             <p>Manage your finance seemlesly with BTMS. Login into access your account and perform transactions effectively</p>
                         </Col>

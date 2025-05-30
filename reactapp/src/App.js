@@ -11,6 +11,7 @@ import HomePage from "./Components/HomePage";
 import ViewAllAccounts from "./ManagerComponents/ViewAllAccountsComponent"
 // Customer
 import Account from "./CustomerComponents/AccountComponent";
+import AccountForm from "./CustomerComponents/AccountForm"
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                             <Route path="/manager/accounts" element={<ViewAllAccounts />} />
                             {/* Customer */}
                             <Route path="/customer/accounts" element={<Account />} />
+                            <Route path="/customer/accounts/create" element={<AccountForm />} />                          
                             <Route path="*" element={<ErrorPage />} />
                         </Route>
                     </Routes>

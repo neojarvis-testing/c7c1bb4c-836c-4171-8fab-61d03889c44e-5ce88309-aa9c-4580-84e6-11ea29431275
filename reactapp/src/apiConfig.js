@@ -22,6 +22,8 @@ export const apiRegisterAsync = async (userData) => {
     }
 }
 
+// Accounts
+
 export const apiGetAllAccountAsync = async (token) => {
     try {
         const response = await axios.get(`${serviceUrl}/api/account`, {
@@ -64,6 +66,20 @@ export const apiUpdateAccountStatusAsync = async (token, accountId, status) => {
         return { success: true, data: response.data };
     } catch (error) {
         console.error("apiUpdateAccountStatusAsync error:", error);
+        return { success: false, message: error.response?.data };
+    }
+}
+
+export const apiCreateAccountAsync = async (token, account) => {
+    try {
+        const response = await axios.post(`${serviceUrl}/api/account`, account, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("apiCreateAccountAsync error:", error);
         return { success: false, message: error.response?.data };
     }
 }

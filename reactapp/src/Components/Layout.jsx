@@ -12,7 +12,8 @@ const Layout = () => {
                     marginTop: "1px",
                     marginBottom: "1px",
                     //color: "white",
-                    minHeight: "400px"
+                    minHeight: "400px",
+                    paddingBottom: "80px",
                 }}
             >
                 <Outlet />

@@ -1,10 +1,25 @@
 .login_container
 {
     width: auto;
+    min-width: 800px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 800px)
+{
+    .login_container
+    {
+        width: 95%;
+        min-width: 400px;
+    }
+
+    .login_container_desc
+    {
+        display: none;
+    }
 }
 
 .login_gradient
