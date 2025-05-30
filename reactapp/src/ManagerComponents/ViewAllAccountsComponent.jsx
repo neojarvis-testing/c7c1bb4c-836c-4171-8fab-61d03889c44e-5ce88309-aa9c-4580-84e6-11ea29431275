@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext, useCallback } from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { UserContext } from '../context/UserContext';
 import { apiGetAllAccountAsync, apiUpdateAccountStatusAsync } from '../apiConfig'
-import { ConfirmToast, Toast, viewAmount, viewDateTime } from '../lib/common';
+import { ConfirmToast, Toast, viewAmount, viewDateTime, getBadgeForAccountStatus } from '../lib/common';
 
 const ViewAllAccounts = () => {
     const [accounts, setAccounts] = useState([]);
@@ -54,29 +54,29 @@ const ViewAllAccounts = () => {
                     <Table responsive striped bordered>
                         <thead>
                             <tr>
-                                <th>Account ID</th>
+                                <th className='text-end'>Account ID</th>
                                 <th>Account Holder</th>
                                 <th>Account Type</th>
                                 <th className='text-end'>Balance</th>
                                 <th>Status</th>
                                 <th>Date Created</th>
                                 <th>Proof Of Identity</th>
-                                <th></th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {accounts.map((account, index) => (
                                 <tr key={`all_accounts_${index}`}>
-                                    <td>{account.accountId}</td>
+                                    <td className='text-end'>{account.accountId}</td>
                                     <td>{account.accountHolderName}</td>
                                     <td>{account.accountType}</td>
                                     <td className='text-end'>{viewAmount(account.balance)}</td>
-                                    <td>{account.status}</td>
+                                    <td>{getBadgeForAccountStatus(account.status)}</td>
                                     <td>{viewDateTime(account.dateCreated)}</td>
                                     <td>{account.proofOfIdentity}</td>
                                     <td>
                                         {(account.status === "Pending" || account.status === "Deactivated") &&
-                                            <Button variant="info" onClick={() => { 
+                                            <Button className='grid-button' variant="primary" onClick={() => { 
                                                 changeAccountStatus(account.accountId, "Active"); 
                                             }}>
                                                 Activate
@@ -84,10 +84,10 @@ const ViewAllAccounts = () => {
                                         }
 
                                         {account.status === "Active" &&
-                                            <Button variant="info" onClick={() => { 
+                                            <Button className='grid-button' variant="danger" onClick={() => { 
                                                 changeAccountStatus(account.accountId, "Deactivated"); 
                                             }}>
-                                                Dectivate
+                                                Deactivate
                                             </Button>
                                         }
                                     </td>

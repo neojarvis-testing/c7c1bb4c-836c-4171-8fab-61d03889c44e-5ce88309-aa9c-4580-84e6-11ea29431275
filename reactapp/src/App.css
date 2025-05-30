@@ -69,3 +69,14 @@
     left: 0px;
     font-weight: 500;
 }
+
+.grid-button
+{
+    padding: 2px 8px 2px 8px !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+}
+.badge-rounded
+{
+    border-radius: 10px !important;
+}

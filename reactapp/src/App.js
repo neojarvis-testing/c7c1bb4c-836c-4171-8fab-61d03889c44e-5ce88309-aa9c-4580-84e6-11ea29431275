@@ -9,6 +9,7 @@ import Layout from "./Components/Layout"
 import HomePage from "./Components/HomePage";
 // Mnager
 import ViewAllAccounts from "./ManagerComponents/ViewAllAccountsComponent"
+import FixedDeposits from "./ManagerComponents/FixedDepositsComponent";
 // Customer
 import Account from "./CustomerComponents/AccountComponent";
 import AccountForm from "./CustomerComponents/AccountForm"
@@ -35,6 +36,8 @@ function App() {
                             <Route index element={<HomePage />} />
                             {/* Manager */}
                             <Route path="/manager/accounts" element={<ViewAllAccounts />} />
+                            <Route path="/manager/fixeddeposits" element={<FixedDeposits />} />
+                            <Route path="/manager/recurringdeposits" element={<FixedDeposits />} />
                             {/* Customer */}
                             <Route path="/customer/accounts" element={<Account />} />
                             <Route path="/customer/accounts/create" element={<AccountForm />} />  

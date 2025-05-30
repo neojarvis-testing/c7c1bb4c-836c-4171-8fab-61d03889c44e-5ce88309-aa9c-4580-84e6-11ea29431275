@@ -1,5 +1,6 @@
 import Swal from 'sweetalert2';
 import { Badge } from 'react-bootstrap';
+import { formatDistanceStrict } from 'date-fns'
 
 export const Toast = Swal.mixin({
     toast: true,
@@ -50,6 +51,13 @@ export const viewDateTime = (date) => {
     }
 }
 
+export const viewRelatedDateTime = (date) => {
+    if(date) {
+        var d = new Date(date + "Z");
+        return formatDistanceStrict(d, new Date(), { addSuffix: true });
+    }
+}
+
 export const getBadgeBgForStatus = (status) => {
     switch (status){
         case "Active":
@@ -61,6 +69,22 @@ export const getBadgeBgForStatus = (status) => {
         default:
             return "secondary";
     }
+}
+
+export const getBadgeForAccountStatus = (status) => {
+    var bg = "warning";
+    switch (status){
+        case "Active":
+            bg = "primary";
+            break;
+        case "Pending":
+            bg = "info";
+            break;
+        default:
+            bg = "warning";
+    }
+
+    return (<Badge bg={bg} className='badge-rounded'>{status}</Badge>);
 }
 
 export const getBadgeForDepositStatus = (depositStatus) => {
@@ -76,5 +100,5 @@ export const getBadgeForDepositStatus = (depositStatus) => {
             bg = "warning";
     }
 
-    return (<Badge bg={bg}>{depositStatus}</Badge>);
+    return (<Badge bg={bg} className='badge-rounded'>{depositStatus}</Badge>);
 }
