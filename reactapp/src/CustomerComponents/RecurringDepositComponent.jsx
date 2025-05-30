@@ -56,7 +56,7 @@ const RecurringDeposit = () => {
                                 <th className='text-end'>Matuarity Amount</th>
                                 <th>Created Date</th>
                                 <th className='text-center'>Status</th>
-                                <th></th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,7 +71,7 @@ const RecurringDeposit = () => {
                                     <td className='text-center'>{getBadgeForDepositStatus(deposit.status)}</td>
                                     <td>
                                         {(deposit.status === "Active") &&
-                                            <Button variant="info" onClick={() => { 
+                                            <Button className='grid-button' variant="primary" onClick={() => { 
                                                 closeDeposit(deposit.rdId); 
                                             }}>
                                                 Close

@@ -66,8 +66,8 @@ const FixedDeposits = () => {
                                 <Form.Select id="accountType" value={filter}
                                     onChange={(e) => setFilter(e.target.value)}>
                                     <option value="All">All</option>
-                                    <option value="Closed">Closed</option>
                                     <option value="Active">Active</option>
+                                    <option value="Closed">Closed</option>
                                     <option value="ClosedPrematuarely">Closed Prematuarely</option>
                                 </Form.Select>
                             </Col>

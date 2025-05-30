@@ -171,6 +171,20 @@ export const apiGetUserRecurringDepositsAsync = async (user) => {
     }
 }
 
+export const apiGetAllRecurringDepositsAsync = async (user) => {
+    try {
+        const response = await axios.get(`${serviceUrl}/api/recurringdeposit`, {
+            headers: {
+                'Authorization': `Bearer ${user.token}`
+            }
+        });
+        return { success: true, data: response.data };
+    } catch (error) {
+        console.error("apiGetAllRecurringDepositsAsync error:", error);
+        return { success: false, message: error.response?.data };
+    }
+}
+
 export const apiCloseUserRecurringDepositsAsync = async (token, fdId) => {
     try {
         const response = await axios.post(`${serviceUrl}/api/recurringdeposit/close/${fdId}`, {}, {

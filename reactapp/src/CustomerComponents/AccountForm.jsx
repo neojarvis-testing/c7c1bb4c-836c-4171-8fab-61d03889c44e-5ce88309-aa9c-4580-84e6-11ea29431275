@@ -51,7 +51,7 @@ const AccountForm = () => {
                 });
                 console.log("response", response);
                 if (response.success) {
-                    await Toast.fire({
+                    Toast.fire({
                         icon: "success",
                         title: "Open New Account is Successful!"
                     });

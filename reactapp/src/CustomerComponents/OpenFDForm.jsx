@@ -52,7 +52,7 @@ const OpenFDForm = () => {
                 });
                 console.log("response", response);
                 if (response.success) {
-                    await Toast.fire({
+                    Toast.fire({
                         icon: "success",
                         title: "Open New FD Account is Successful!"
                     });
