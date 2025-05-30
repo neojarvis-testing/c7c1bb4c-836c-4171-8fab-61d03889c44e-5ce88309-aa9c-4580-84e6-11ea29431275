@@ -4,7 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommonLibrary.Models;
 using dotnetapp3.ViewModels;
-namespace dotnetapp3.Repositroy
+
+namespace dotnetapp3.Repository
 {
     public interface IFixedDepositRepository
     {

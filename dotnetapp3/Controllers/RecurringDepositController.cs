@@ -11,30 +11,29 @@ namespace dotnetapp3.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class RecurringDepositeController : ControllerBase
+    public class RecurringDepositController : ControllerBase
     {
-        private readonly IRecurringDepositeService _RecurringDepositService;
+        private readonly IRecurringDepositService _RecurringDepositService;
 
-        public RecurringDepositeController(IRecurringDepositeService RecurringDepositService){
+        public RecurringDepositController(IRecurringDepositService RecurringDepositService){
             _RecurringDepositService = RecurringDepositService;
         }
 
         [HttpGet]
         [Authorize(Roles = "Teller,Manager")]
-        [Route("/api/recurringDeposit")]
         public async Task<IActionResult> GetAll()
         {
             try{
                 var data = await _RecurringDepositService.GetAllAsync();
                 return Ok(data);
             }catch(Exception ex){
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpGet]
         [Authorize(Roles = "Customer")]
-        [Route("/api/recurringdeposit/user/{userId}")]
+        [Route("user/{userId}")]
         public async Task<IActionResult> GetRecurringDepositAccountsByUserIdAsync(int userId)
         {
             try
@@ -47,13 +46,12 @@ namespace dotnetapp3.Controllers
                 return  Ok(data);
             }
             catch(Exception ex){
-                 return StatusCode(500);
+                 return StatusCode(500, ex.Message);
             }
         }
         
         [HttpPost]
         [Authorize(Roles = "Customer")]
-        [Route("/api/recurringdeposit")]
         public async Task<IActionResult> CreateRecurringDepositAccountAsync(RecurringDepositViewModel account)
         {
             try
@@ -61,21 +59,23 @@ namespace dotnetapp3.Controllers
                 var createdAccount = await _RecurringDepositService.CreateRecurringDepositAccountAsync(account);
                 return StatusCode(201, createdAccount);
             }
+            catch (AccountBalanceException ex)
+            {
+                return StatusCode(409, ex.Message);
+            }
             catch (InvalidValueTypeException ex)
             {
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
-
         
-
         [HttpPost]
         [Authorize(Roles = "Manager")]
-        [Route("/api/recurringdeposit/close/{id}")]
+        [Route("close/{id}")]
         public async Task<IActionResult> CloseRecurringDepositAccountByIdAsync(int id)
         {
             try
@@ -84,13 +84,13 @@ namespace dotnetapp3.Controllers
                 return isUpdated ? Ok() : BadRequest();
             }
             catch(Exception ex){
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
 
         [HttpGet]
-        [Route("/api/recurringdeposit/account/{accountId}")]
+        [Route("account/{accountId}")]
         [Authorize(Roles = "Customer, Teller, Manager")]
         public async Task<IActionResult> GetRecurringDepositByAccountIdAsync(int accountId)
         {
@@ -104,7 +104,7 @@ namespace dotnetapp3.Controllers
                 return  Ok(data);
             }
             catch(Exception ex){
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
     }

@@ -34,7 +34,55 @@
                 }
             ],
             "UpstreamPathtemplate": "/api/account/{everything}",
-            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Patch"]
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/fixeddeposit/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8076
+                }
+            ],
+            "UpstreamPathtemplate": "/api/fixeddeposit/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/recurringdeposit/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8076
+                }
+            ],
+            "UpstreamPathtemplate": "/api/recurringdeposit/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/transaction/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8078
+                }
+            ],
+            "UpstreamPathtemplate": "/api/transaction/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete"]
+        },
+        {
+            "DownstreamPathTemplate": "/api/notification/{everything}",
+            "DownstreamScheme": "http",
+            "DownstreamHostAndPorts": [
+                {
+                    "Host": "localhost",
+                    "Port": 8077
+                }
+            ],
+            "UpstreamPathtemplate": "/api/notification/{everything}",
+            "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete"]
         }
     ]
 }

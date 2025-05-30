@@ -14,6 +14,7 @@ namespace dotnetapp3.Data
             Database.EnsureCreated();
         }
 
+        public DbSet<Account> Accounts {get; set; }
         public DbSet<FixedDeposit> FixedDeposits {get; set; }
         public DbSet<RecurringDeposit> RecurringDeposits {get; set; }
     }

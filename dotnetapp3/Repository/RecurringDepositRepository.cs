@@ -2,19 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using dotnetapp3.Repositroy;
 using CommonLibrary.Models;
 using dotnetapp3.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using dotnetapp3.Data;
 
-namespace dotnetapp3.Repositroy
+namespace dotnetapp3.Repository
 {
-    public class RecurringDepositeRepository : IRecurringDepositeRepository
+    public class RecurringDepositRepository : IRecurringDepositRepository
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public RecurringDepositeRepository(ApplicationDbContext dbContext)
+        public RecurringDepositRepository(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -27,6 +26,7 @@ namespace dotnetapp3.Repositroy
         public async Task<List<RecurringDeposit>> GetRecurringDepositAccountsByUserIdAsync(int userId){
              var accounts = await _dbContext.RecurringDeposits
                             .Where(a => a.UserId == userId)
+                            .OrderByDescending(a => a.DateCreated)
                             .ToListAsync();
             return accounts ?? new List<RecurringDeposit>();
         }
@@ -66,9 +66,9 @@ namespace dotnetapp3.Repositroy
        public async  Task<List<RecurringDeposit>> GetRecurringDepositByAccountIdAsync(int accountId){
          var accounts = await _dbContext.RecurringDeposits
                             .Where(a => a.AccountId == accountId)
+                            .OrderByDescending(a => a.DateCreated)
                             .ToListAsync();
             return accounts ?? new List<RecurringDeposit>();
        }
-
     }
 }

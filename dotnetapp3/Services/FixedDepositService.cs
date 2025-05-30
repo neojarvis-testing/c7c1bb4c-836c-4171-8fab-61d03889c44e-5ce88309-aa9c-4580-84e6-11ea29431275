@@ -2,18 +2,25 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using dotnetapp3.Repositroy;
 using dotnetapp3.ViewModels;
 using dotnetapp3.Data;
 using CommonLibrary.Models;
 using dotnetapp3.Exceptions;
+using dotnetapp3.Repository;
+
 namespace dotnetapp3.Services
 {
     public class FixedDepositService : IFixedDepositService
     {
         private readonly IFixedDepositRepository _FixedDepositRepository;
-        public FixedDepositService(IFixedDepositRepository FixedDepositRepository){
+        private readonly IAccountRepository _accountRepository;
+
+        public FixedDepositService(
+                IFixedDepositRepository FixedDepositRepository, 
+                IAccountRepository accountRepository)
+        {
             _FixedDepositRepository = FixedDepositRepository;
+            _accountRepository = accountRepository;
         }
 
         public async Task<List<FixedDeposit>> GetAllAsync(){
@@ -22,15 +29,26 @@ namespace dotnetapp3.Services
         
         public async Task<FixedDeposit> CreateFixedDepositAccountAsync(FixedDepositViewModel account)
         {
-            if(account.UserId <=0)
+            if(account.UserId <= 0)
             {
                 throw InvalidValueTypeException.WithType(account.UserId.ToString());
             } 
-            if(account.UserId <=0)
+
+            if(account.AccountId <= 0)
             {
                 throw InvalidValueTypeException.WithType(account.AccountId.ToString());
             }    
-            var newAccount = await _FixedDepositRepository. CreateFixedDepositAccountAsync(account);
+
+            var sourceAccount = await _accountRepository.GetAccountByIdAsync(account.AccountId);
+            if(sourceAccount == null) {
+                throw InvalidValueTypeException.WithType(account.AccountId.ToString());
+            }
+
+            if(account.PrincipalAmount > sourceAccount.Balance){
+                throw AccountBalanceException.With(account.PrincipalAmount);
+            }
+
+            var newAccount = await _FixedDepositRepository.CreateFixedDepositAccountAsync(account);
             return newAccount;
         }
 
@@ -45,6 +63,5 @@ namespace dotnetapp3.Services
         public async Task<List<FixedDeposit>> GetFixedDepositByAccountIdAsync(int accountId){
             return await _FixedDepositRepository.GetFixedDepositByAccountIdAsync(accountId);
         } 
-        
     }
 }

@@ -15,26 +15,25 @@ namespace dotnetapp3.Controllers
     public class FixedDepositController : ControllerBase
     {
         private readonly IFixedDepositService _FixedDepositService;
+
         public FixedDepositController(IFixedDepositService FixedDepositService){
             _FixedDepositService = FixedDepositService;
         }
 
         [HttpGet]
         [Authorize(Roles = "Manager, Teller")]
-        [Route("/api/fixedDeposit")]
         public async Task<IActionResult> GetAll()
         {
             try{
                 var data = await _FixedDepositService.GetAllAsync();
                 return Ok(data);
             }catch(Exception ex){
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpPost]
         [Authorize(Roles = "Customer")]
-        [Route("/api/FixedDeposit")]
         public async Task<IActionResult> CreateFixedDepositAccountAsync(FixedDepositViewModel account)
         {
             try
@@ -42,19 +41,23 @@ namespace dotnetapp3.Controllers
                 var createdAccount = await _FixedDepositService.CreateFixedDepositAccountAsync(account);
                 return StatusCode(201, createdAccount);
             }
+            catch (AccountBalanceException ex)
+            {
+                return StatusCode(409, ex.Message);
+            }
             catch (InvalidValueTypeException ex)
             {
                 return BadRequest(ex.Message);
             }
             catch (Exception ex)
             {
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpPost]
         [Authorize(Roles = "Manager")]
-        [Route("/api/FixedDeposit/close/{id}")]
+        [Route("close/{id}")]
         public async Task<IActionResult> CloseFixedDepositAccountByIdAsync(int id)
         {
             try
@@ -63,13 +66,13 @@ namespace dotnetapp3.Controllers
                 return isUpdated ? Ok() : BadRequest();
             }
             catch(Exception ex){
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
 
         [HttpGet]
         [Authorize(Roles = "Customer")]
-        [Route("/api/FixedDeposit/user/{userId}")]
+        [Route("user/{userId}")]
         public async Task<IActionResult> GetFixedDepositAccountsByUserIdAsync(int userId)
         {
             try
@@ -82,12 +85,12 @@ namespace dotnetapp3.Controllers
                 return  Ok(data);
             }
             catch(Exception ex){
-                 return StatusCode(500);
+                 return StatusCode(500, ex.Message);
             }
         }
 
         [HttpGet]
-        [Route("/api/FixedDeposit/account/{accountId}")]
+        [Route("account/{accountId}")]
         [Authorize(Roles = "Customer, Teller, Manager")]
         public async Task<IActionResult> GetFixedDepositByAccountIdAsync(int accountId)
         {
@@ -101,7 +104,7 @@ namespace dotnetapp3.Controllers
                 return  Ok(data);
             }
             catch(Exception ex){
-                return StatusCode(500);
+                return StatusCode(500, ex.Message);
             }
         }
     }
